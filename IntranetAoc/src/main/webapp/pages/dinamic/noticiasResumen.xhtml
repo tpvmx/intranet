@@ -1,0 +1,125 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui"
+	template="../../template/layoutintranet.xhtml">
+	<ui:define name="content">
+		<section class="feature">
+			<div class="container-fluid">
+				<h:form>
+					<p:ajaxStatus onstart="PF('statusDialog').show()"
+						oncomplete="PF('statusDialog').hide()" />
+
+					<c:if test="#{beanSession.localeActual.language eq 'es'}">
+						<h:graphicImage
+							value="resources/imagenes/cabeceras/cab_noticias_es.png"
+							width="100%" />
+					</c:if>
+					<c:if test="#{beanSession.localeActual.language eq 'en'}">
+						<h:graphicImage
+							value="resources/imagenes/cabeceras/cab_noticias_en.png"
+							width="100%" />
+					</c:if>
+					<div class="container">
+						<b:well>
+							<p:growl id="msgs" showDetail="true" />
+							<br />
+							<div class="lineaCustomeBebasBook">
+								<h3>#{texto.tituloNoticias}</h3>
+							</div>
+							<b:panelGrid colSpans="12">
+								<b:panelGrid colSpans="8,2,2">
+									<p:outputLabel />
+									<b:commandButton id="btnActualizar"
+										value="#{texto.btnActualizar}" icon-awesome="fa-repeat"
+										styleClass="btn-md btnCustomeAzul"
+										action="#{beanNoticiasResumen.Actualizar}" update="@form" />
+									<b:commandButton id="btnNoticia" value="#{texto.btnNoticia}"
+										icon-awesome="fa-send" styleClass="btn-md btnCustome"
+										action="#{beanNoticiasResumen.CrearNoticia}" update="@form" />
+								</b:panelGrid>
+								<hr />
+								<b:panelGrid colSpans="4,8">
+									<b:selectOneMenu id="tipo" label="#{texto.resuTipoNoticia}"
+										value="#{beanNoticiasResumen.tipoNoticia}"
+										onchange="ajax:beanNoticiasResumen.buscaNoticiasXTipo()"
+										ajax="true" update="tablaReporte">
+										<f:selectItems value="#{beanNoticiasResumen.listTipoNoticia}"
+											var="tipo" itemLabel="#{tipo.descripcion}"
+											itemValue="#{tipo.idTipoNoticia}" />
+										<f:facet name="prepend">
+											<b:icon name="globe" />
+										</f:facet>
+									</b:selectOneMenu>
+								</b:panelGrid>
+
+								<b:panelGrid colSpans="12">
+									<p:dataTable var="nt" id="tablaReporte"
+										value="#{beanNoticiasResumen.listNoticiasResumen}"
+										draggableRows="true">
+										<p:ajax event="rowReorder" />
+										<f:facet name="header">
+						           #{texto.headerNoticias}
+						        </f:facet>
+										<p:column headerText="#{texto.orden}" width="5%">
+											<h:outputText value="#{nt.orden}" />
+										</p:column>
+										<c:if test="#{beanSession.localeActual.language eq 'es'}">
+											<p:column headerText="#{texto.titulo}" width="40%">
+												<h:outputText value="#{nt.titulo}" />
+											</p:column>
+											<p:column headerText="#{texto.subtitulo}" width="40%">
+												<h:outputText value="#{nt.subtitulo}" />
+											</p:column>
+										</c:if>
+										<c:if test="#{beanSession.localeActual.language eq 'en'}">
+											<p:column headerText="#{texto.titulo}" width="40%">
+												<h:outputText value="#{nt.title}" />
+											</p:column>
+											<p:column headerText="#{texto.subtitulo}" width="40%">
+												<h:outputText value="#{nt.subtitle}" />
+											</p:column>
+										</c:if>
+										<p:column styleClass="text-center" width="5%">
+											<f:facet name="header">
+												<h:outputText value="#{texto.editar}" />
+											</f:facet>
+											<!-- es para direccionar a una vista -->
+											<p:button icon="fa fa-edit" outcome="noticia"
+												styleClass="btn btn-md btn-success">
+												<f:param name="idNoticias" value="#{nt.idNoticias}" />
+											</p:button>
+										</p:column>
+										<p:column styleClass="text-center" width="5%">
+											<f:facet name="header">
+												<h:outputText value="#{texto.eliminar}" />
+											</f:facet>
+											<!-- es para direccionar a una vista -->
+											<p:commandButton icon="fa fa-trash"
+												styleClass="btn btn-md btn-danger"
+												actionListener="#{beanNoticiasResumen.eliminaNoticia(nt)}"
+												update="tablaReporte">
+												<p:confirm header="#{texto.noticiaResumenConfirma}"
+													message="#{texto.noticiaResumenSeguro}"
+													icon="ui-icon-alert" />
+											</p:commandButton>
+											<p:confirmDialog global="true" showEffect="fade"
+												hideEffect="fade">
+												<p:commandButton value="#{texto.noticiaResumenSi}"
+													styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+												<p:commandButton value="No" type="button"
+													styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+											</p:confirmDialog>
+										</p:column>
+									</p:dataTable>
+								</b:panelGrid>
+							</b:panelGrid>
+						</b:well>
+					</div>
+				</h:form>
+			</div>
+		</section>
+	</ui:define>
+</ui:composition>

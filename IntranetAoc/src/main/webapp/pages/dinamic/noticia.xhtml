@@ -1,0 +1,182 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui"
+	template="../../template/layoutintranet.xhtml"
+	xmlns:c="http://java.sun.com/jstl/core">
+	<f:metadata>
+		<f:viewParam name="idNoticias" value="#{beanNoticias.idNoticiaParam}" />
+		<f:viewAction action="#{beanNoticias.buscaNoticiaParam}" />
+	</f:metadata>
+	<ui:define name="content">
+		<section class="feature">
+			<div class="container-fluid">
+				<h:form>
+					<p:ajaxStatus onstart="PF('statusDialog').show()"
+						oncomplete="PF('statusDialog').hide()" />
+					<c:if test="#{beanSession.localeActual.language eq 'es'}">
+						<h:graphicImage
+							value="resources/imagenes/cabeceras/cab_noticias_es.png"
+							width="100%" />
+					</c:if>
+					<c:if test="#{beanSession.localeActual.language eq 'en'}">
+						<h:graphicImage
+							value="resources/imagenes/cabeceras/cab_noticias_en.png"
+							width="100%" />
+					</c:if>
+					<div class="container">
+						<b:well>
+							<br />
+							<br />
+							<b:panelGrid colSpans="8,2,2">
+								<p:outputLabel />
+								<b:commandButton id="btnRegresar"
+									styleClass="btn-md btnCustomeGrey"
+									action="#{beanNoticias.Finalizar}" value="#{texto.btnAtras}"
+									icon="fa-arrow-left" update="@form" />
+								<b:commandButton id="btnInsertar"
+									styleClass="btn-md btnCustomeAzul"
+									action="#{beanNoticias.InsertaNoticia}"
+									value="#{texto.btnSiguiente}" title="#{texto.btnSiguiente}"
+									update="@form" icon="arrow-alt-right">
+								</b:commandButton>
+								<br />
+							</b:panelGrid>
+							<div class="lineaCustomeBebasB">
+								<h3>Ingrese los siguientes datos para crear una nueva
+									noticia en Español:</h3>
+							</div>
+							<hr />
+							<b:messages id="msg" escape="false" />
+							<b:panelGrid colSpans="4,4,4">
+								<b:selectOneMenu id="cboNews" label="Tipo de Noticia:"
+									value="#{beanNoticias.noticiaActual.idtiponoticia}"
+									update="@form" onchange="ajax:beanNoticias.validaTipo()">
+									<f:selectItem itemLabel="#{texto.cboSeleccione}" itemValue="-1" />
+									<f:selectItems value="#{beanNoticias.listTipoNoticia}"
+										var="libdir" itemLabel="#{libdir.descripcion}"
+										itemValue="#{libdir.idTipoNoticia}" />
+									<f:facet name="prepend">
+										<b:icon name="globe" />
+									</f:facet>
+								</b:selectOneMenu>
+								<b:panelGrid colSpans="12">
+									<p:outputLabel styleClass="control-label"
+										value="Fecha Inicial:" />
+									<p:calendar id="fecInicio"
+										locale="#{beanSession.localeActual.language}"
+										value="#{beanNoticias.noticiaActual.fecinicio}"
+										pattern="dd/MM/yyyy HH:mm" showOn="button" />
+								</b:panelGrid>
+								<b:panelGrid colSpans="12">
+									<p:outputLabel styleClass="control-label" value="Fecha Fin:" />
+									<p:calendar id="fecFin"
+										locale="#{beanSession.localeActual.language}"
+										value="#{beanNoticias.noticiaActual.fecfin}"
+										pattern="dd/MM/yyyy HH:mm" showOn="button" />
+								</b:panelGrid>
+							</b:panelGrid>
+							<b:panelGrid colSpans="12">
+								<b:inputText placeholder="Url" label="Url:" id="mycal"
+									value="#{beanNoticias.noticiaActual.url}"
+									disabled="#{beanNoticias.caldisabled}">
+									<f:facet name="prepend">
+										<b:icon name="globe" />
+									</f:facet>
+								</b:inputText>
+							</b:panelGrid>
+							<div class="lineaCustome">
+								<h3>Español</h3>
+							</div>
+							<b:panelGrid colSpans="12">
+								<b:inputText id="titulo" placeholder="Titulo" label="Titulo"
+									colMd="10" labelColMd="2"
+									value="#{beanNoticias.noticiaActual.titulo}" maxlength="100">
+									<f:facet name="prepend">
+										<b:icon name="pencil" />
+									</f:facet>
+								</b:inputText>
+								<p:colorPicker value="#{beanNoticias.noticiaActual.colorTitulo}" />
+								<b:inputText id="subtitulo" placeholder="Subtitulo"
+									label="Subtitulo:" colMd="10" labelColMd="2"
+									value="#{beanNoticias.noticiaActual.subtitulo}">
+									<f:facet name="prepend">
+										<b:icon name="pencil" />
+									</f:facet>
+								</b:inputText>
+								<p:colorPicker
+									value="#{beanNoticias.noticiaActual.colorSubTitulo}" />
+								<b:inputTextarea id="resumen" rows="3"
+									placeholder="Resumen Noticia" label="Resumen Noticia:"
+									labelColXs="2" colXs="10"
+									value="#{beanNoticias.noticiaActual.resumen}">
+									<f:facet name="prepend">
+										<b:icon name="pencil" />
+									</f:facet>
+								</b:inputTextarea>
+								<b:inputTextarea id="nota" rows="7" placeholder="Noticia"
+									label="Noticia:" labelColXs="2" colXs="10"
+									value="#{beanNoticias.noticiaActual.notaCompleta}">
+									<f:facet name="prepend">
+										<b:icon name="pencil" />
+									</f:facet>
+								</b:inputTextarea>
+								<div class="lineaCustome">
+									<h3>English</h3>
+								</div>
+								<div class="lineaCustomeBebasB">
+									<h3>Enter the following data to create a new news in
+										English:</h3>
+								</div>
+								<br />
+								<b:inputText id="title" placeholder="Title" label="Title:"
+									colMd="10" labelColMd="2"
+									value="#{beanNoticias.noticiaActual.title}">
+									<f:facet name="prepend">
+										<b:icon name="pencil" />
+									</f:facet>
+								</b:inputText>
+								<b:inputText id="subtitle" placeholder="Subtitle"
+									label="Subtitle:" colMd="10" labelColMd="2"
+									value="#{beanNoticias.noticiaActual.subtitle}">
+									<f:facet name="prepend">
+										<b:icon name="pencil" />
+									</f:facet>
+								</b:inputText>
+								<b:inputTextarea id="summary" rows="3"
+									placeholder="Summary News" label="Summary News:" labelColXs="2"
+									colXs="10" value="#{beanNoticias.noticiaActual.summary}">
+									<f:facet name="prepend">
+										<b:icon name="pencil" />
+									</f:facet>
+								</b:inputTextarea>
+								<b:inputTextarea id="note" rows="7" placeholder="News"
+									label="News:" labelColXs="2" colXs="10"
+									value="#{beanNoticias.noticiaActual.completenote}">
+									<f:facet name="prepend">
+										<b:icon name="pencil" />
+									</f:facet>
+								</b:inputTextarea>
+							</b:panelGrid>
+							<b:panelGrid colSpans="8,2,2">
+								<p:outputLabel />
+								<b:commandButton id="btnRegresar1"
+									styleClass="btn-md btnCustomeGrey"
+									action="#{beanNoticias.Finalizar}" value="#{texto.btnAtras}"
+									icon="fa-arrow-left" update="@form" />
+								<b:commandButton id="btnInsertar1"
+									styleClass="btn-md btnCustomeAzul"
+									action="#{beanNoticias.InsertaNoticia}"
+									value="#{texto.btnSiguiente}" title="#{texto.btnSiguiente}"
+									update="@form" icon="arrow-alt-right">
+								</b:commandButton>
+
+							</b:panelGrid>
+						</b:well>
+					</div>
+				</h:form>
+			</div>
+		</section>
+	</ui:define>
+</ui:composition>

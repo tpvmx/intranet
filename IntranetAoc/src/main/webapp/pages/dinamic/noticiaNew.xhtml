@@ -1,0 +1,30 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui"
+	template="/template/index.xhtml">
+	<f:metadata>
+		<f:viewParam name="idNoticias" value="#{beanNoticias.idNoticiaParam}" />
+		<f:viewAction action="#{beanNoticias.buscaNoticiaParam}" />
+	</f:metadata>
+	<ui:define name="content">
+		<h:form id="formSend" enctype="multipart/form-data">
+			<p:ajaxStatus onstart="PF('statusDialog').show()"
+				oncomplete="PF('statusDialog').hide()" />
+			<section id="feature" class="section-padding">
+				<div class="container-fluid">
+					<b:well>
+						<div class="lineaCustome">
+							<h2>#{texto.calenMexico}</h2>
+						</div>
+						<iframe id="iframe" src="resources/pdfs/proteccion.pdf"
+							width="100%" height="820px"></iframe>
+					</b:well>
+
+
+				</div>
+			</section>
+		</h:form>
+	</ui:define>
+</ui:composition>

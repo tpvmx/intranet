@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:b="http://bootsfaces.net/ui">
+<ui:composition>
+	<!--Footer-->
+	<footer id="footer" class="footer">
+	<div class="container text-center" style="color: #1F1D1E;">
+		<ul class="social-links">
+			<li><a><i class="fa fa-facebook fa-fw"></i></a></li>
+			<li><a><i class="fa fa-twitter fa-fw"></i></a></li>
+			<li><a><i class="fa fa-linkedin fa-fw"></i></a></li>
+		</ul>
+		©2018 AOC . All rights reserved
+		<hr />
+		<h6>#{beanSession.etiquetaVersion()}</h6>
+	</div>
+	</footer>
+	<!--/ Footer-->
+</ui:composition>
+</html>

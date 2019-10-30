@@ -1,0 +1,46 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui"
+	template="/template/index.xhtml">
+	<ui:define name="content">
+		<div class="container">
+			<br /> <br /> <br /> <br /> <br /> <br />
+			<div class="row">
+				<button onclick=""></button>
+				<h:form id="form">
+					<p:commandButton value="Hols"
+						actionListener="#{beanSession.holaMundo}" />
+
+					<b:alert severity="success">
+						<strong>Ayuda con la contraseña!!</strong> 
+                 Escribe la dirección de correo electrónico asociado a tu cuenta de AOC.</b:alert>
+					<b:panelGrid colSpans="3,6,3">
+						<p:outputLabel value=" " />
+						<b:messages id="msg" escape="false" />
+						<p:outputLabel value=" " />
+						<p:outputLabel value=" " />
+						<b:inputText label="Dirección de correo electrónico:"
+							value="#{beanContrasenia.correorestablecer}" required="true"
+							validatorMessage="Correo electronico invalido"
+							requiredMessage="Correo electronico requerido">
+							<f:validateRegex
+								pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" />
+						</b:inputText>
+						<p:outputLabel value=" " />
+						<p:outputLabel value=" " />
+						<b:commandButton id="cmdEnviar"
+							action="#{beanContrasenia.restablecer}" value="Enviar"
+							look="success" size="lg" iconAwesome="fa-send" />
+						<p:outputLabel value=" " />
+						<p:outputLabel value=" " />
+						<p:outputLabel value=" " />
+						<p:outputLabel value=" " />
+						<p:outputLabel value=" " />
+					</b:panelGrid>
+				</h:form>
+			</div>
+		</div>
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,128 @@
+
+<pretty-config
+	xmlns="http://ocpsoft.org/prettyfaces/3.3.3"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://ocpsoft.org/schema/rewrite-config-prettyfaces
+                      http://ocpsoft.org/xml/ns/prettyfaces/rewrite-config-prettyfaces.xsd">
+
+	<url-mapping id="inicio">
+		<pattern value="/inicio" />
+		<view-id value="/pages/inicio2.xhtml" />
+	</url-mapping>
+	
+	<url-mapping id="inicio2">
+		<pattern value="/inicio2" />
+		<view-id value="/pages/inicio2.xhtml" />
+	</url-mapping>
+
+	<url-mapping id="historia">
+		<pattern value="/historia" />
+		<view-id value="/pages/historia.xhtml" />
+	</url-mapping>
+
+	<url-mapping id="restablecer">
+		<pattern value="/restablecer" />
+		<view-id value="/pages_ss/restablecerContra.xhtml" />
+	</url-mapping>
+
+	<url-mapping id="cambiopass">
+		<pattern value="/cambiopass" />
+		<view-id value="/pages_ss/cambioContrasenia.xhtml" />
+	</url-mapping>
+
+	<url-mapping id="noticia">
+		<pattern value="/noticia" />
+		<view-id value="/pages/dinamic/noticia.xhtml" />
+	</url-mapping>
+
+	<url-mapping id="calendario">
+		<pattern value="/calendario" />
+		<view-id value="/pages/dinamic/calendario.xhtml" />
+	</url-mapping>
+
+	<url-mapping id="vacacion">
+		<pattern value="/vacacion" />
+		<view-id value="/pages/dinamic/vacacion.xhtml" />
+	</url-mapping>
+
+	<url-mapping id="Gasto">
+		<pattern value="/Gasto" />
+		<view-id value="/pages/dinamic/gastoViaje.xhtml" />
+	</url-mapping>
+
+	<url-mapping id="noticiaResumen">
+		<pattern value="/noticiaResumen" />
+		<view-id value="/pages/dinamic/noticiasResumen.xhtml" />
+	</url-mapping>
+
+	<url-mapping id="noticiaArticulo">
+		<pattern value="/noticiaArticulo" />
+		<view-id value="/pages/dinamic/noticiaArticulo.xhtml" />
+	</url-mapping>
+	<url-mapping id="articulo">
+		<pattern value="/articulo" />
+		<view-id value="/pages/dinamic/articulo.xhtml" />
+	</url-mapping>
+
+
+	<url-mapping id="papeleria">
+		<pattern value="/papeleria" />
+		<view-id value="/pages/papeleria.xhtml" />
+	</url-mapping>
+	
+	<url-mapping id="juntas">
+		<pattern value="/juntas" />
+		<view-id value="/pages/juntas.xhtml" />
+	</url-mapping>
+
+	<url-mapping id="consultaformulario">
+		<pattern value="/consultaformulario" />
+		<view-id value="/pages/consultaformulario.xhtml" />
+	</url-mapping>
+
+	<url-mapping id="productos">
+		<pattern value="/productos" />
+		<view-id value="/pages/productos.xhtml" />
+	</url-mapping>
+
+	<url-mapping id="proteccion">
+		<pattern value="/proteccion" />
+		<view-id value="/pages/proteccion.xhtml" />
+	</url-mapping>
+	<url-mapping id="viaje">
+		<pattern value="/viaje" />
+		<view-id value="/pages/viaje.xhtml" />
+	</url-mapping>
+	<url-mapping id="vestimenta">
+		<pattern value="/vestimenta" />
+		<view-id value="/pages/vestimenta.xhtml" />
+	</url-mapping>
+	<url-mapping id="cajanegra">
+		<pattern value="/cajanegra" />
+		<view-id value="/pages/cajanegra.xhtml" />
+	</url-mapping>
+	<url-mapping id="activofijo">
+		<pattern value="/activofijo" />
+		<view-id value="/pages/activofijo.xhtml" />
+	</url-mapping>
+	<url-mapping id="convivencia">
+		<pattern value="/convivencia" />
+		<view-id value="/pages/convivencia.xhtml" />
+	</url-mapping>
+	<url-mapping id="politicacorporativa">
+		<pattern value="/politicacorporativa" />
+		<view-id value="/pages/politicacorporativa.xhtml" />
+	</url-mapping>
+	<url-mapping id="politicas">
+		<pattern value="/politicas" />
+		<view-id value="/pages/politicas.xhtml" />
+	</url-mapping>
+	<url-mapping id="organigrama">
+		<pattern value="/organigrama" />
+		<view-id value="/pages/organigramaimagen.xhtml" />
+	</url-mapping>
+	<url-mapping id="sinpermisos">
+		<pattern value="/sinpermisos" />
+		<view-id value="/template/sinpermisos.xhtml" />
+	</url-mapping>
+</pretty-config>

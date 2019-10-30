@@ -1,0 +1,441 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui"
+	template="/template/layoutintranet.xhtml"
+	xmlns:c="http://java.sun.com/jstl/core">
+	<ui:define name="content">
+		<section class="feature">
+			<div class="container-fluid">
+				<h:form>
+					<p:ajaxStatus onstart="PF('statusDialog').show()"
+						oncomplete="PF('statusDialog').hide()" />
+					<c:if test="#{beanSession.localeActual.language eq 'es'}">
+						<h:graphicImage
+							value="resources/imagenes/cabeceras/cab_consultas_es.png"
+							width="100%" />
+					</c:if>
+					<c:if test="#{beanSession.localeActual.language eq 'en'}">
+						<h:graphicImage
+							value="resources/imagenes/cabeceras/cab_consultas_en.png"
+							width="100%" />
+					</c:if>
+					<b:well>
+						<div class="container">
+							<br />
+							<p:messages id="messages" showDetail="true" closable="true" />
+							<br />
+							<b:panelGrid col-spans="3,3,3,3">
+								<b:selectOneMenu id="tipoconsulta" label="#{texto.tipoconsul}:"
+									value="#{beanCosultaFormulario.consult}">
+									<f:selectItem itemLabel="#{texto.consulSeleccione}"
+										itemValue="-1" />
+									<f:selectItem itemLabel="#{texto.consulVacaciones}"
+										itemValue="vacaciones" />
+									<f:selectItem itemLabel="#{texto.consulPapeleria}"
+										itemValue="papeleria" />
+									<f:selectItem itemLabel="#{texto.consulViatico}"
+										itemValue="viaticos" />
+									<f:selectItem itemLabel="#{texto.consulJunta}"
+										itemValue="juntas" />
+								</b:selectOneMenu>
+								<b:panelGrid colSpans="12">
+									<p:outputLabel styleClass="control-label"
+										value="#{texto.consulInicial}:" />
+									<p:calendar id="to"
+										locale="#{beanSession.localeActual.language}"
+										value="#{beanCosultaFormulario.fechaInicio}"
+										pattern="dd/MM/yyyy" showOn="button" />
+								</b:panelGrid>
+								<b:panelGrid colSpans="12">
+									<p:outputLabel styleClass="control-label"
+										value="#{texto.consulFinal}:" />
+									<p:calendar id="end"
+										locale="#{beanSession.localeActual.language}"
+										value="#{beanCosultaFormulario.fechaFin}" pattern="dd/MM/yyyy"
+										showOn="button" />
+								</b:panelGrid>
+								<b:panelGrid colSpans="12">
+									<p:outputLabel />
+									<b:selectBooleanCheckbox id="Despachados"
+										caption="#{texto.consulaAutorizado}"
+										value="#{beanCosultaFormulario.despachado}">
+									</b:selectBooleanCheckbox>
+								</b:panelGrid>
+							</b:panelGrid>
+							<br></br>
+							<b:panelGrid colSpans="8,2,2">
+								<p:outputLabel />
+								<p:commandButton icon="fa fa-search" value="#{texto.buscar}"
+									actionListener="#{beanCosultaFormulario.consulta}"
+									styleClass="btn-md btnCustome" update="@form" />
+								<p:commandButton icon="fa fa-refresh" value="#{texto.nuevo}"
+									actionListener="#{beanCosultaFormulario.limpiarCampos}"
+									styleClass="btn-md btnCustomeGrey" update="@form" />
+							</b:panelGrid>
+							<br></br>
+							<p:dataTable id="tabla" var="vac"
+								rendered="#{beanCosultaFormulario.edita}"
+								value="#{beanCosultaFormulario.listVacacion}" editable="true"
+								editMode="cell" widgetVar="esta"
+								paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
+								paginator="true" rows="10" style="margin-bottom:85px"
+								selection="#{beanCosultaFormulario.myvacacion}"
+								rowKey="#{vac.id_vacacion}" selectionMode="single">
+
+								<f:facet name="{Exporters}">
+									<h:commandLink>
+										<p:graphicImage library="images" name="excel_logo.png"
+											width="24" />
+										<p:dataExporter type="xls" target="tabla"
+											fileName="consultass" icon="fa-file-excel-o" />
+									</h:commandLink>
+									<h:commandLink>
+										<p:graphicImage name="/demo/images/csv.png" width="24" />
+										<p:dataExporter type="csv" target="tabla"
+											fileName="consultass" />
+									</h:commandLink>
+								</f:facet>
+
+
+								<p:column>
+									<f:facet name="header">
+										<h:outputText value="#{texto.empleado}" />
+									</f:facet>
+									<h:outputText value="#{vac.num_empleado}" />
+								</p:column>
+								<p:column>
+									<f:facet name="header">
+										<h:outputText value="#{texto.departamento}" />
+									</f:facet>
+									<h:outputText value="#{vac.num_empleado.departamento}" />
+								</p:column>
+
+								<f:facet name="header">
+									<h:outputText value="#{texto.consulvaca}" />
+									<p:ajax event="rowEdit"
+										listener="#{beanConsultaFormulario.edita}" update="tabla" />
+								</f:facet>
+
+								<p:column>
+									<f:facet name="header">
+										<h:outputText value="fecha inicial" />
+									</f:facet>
+									<h:outputText value="#{vac.fecha_inicial}"
+										converter="convertDate" />
+								</p:column>
+								<p:column>
+									<f:facet name="header">
+										<h:outputText value="fecha final" />
+									</f:facet>
+									<h:outputText value="#{vac.fecha_final}"
+										converter="convertDate" />
+								</p:column>
+
+								<p:column>
+									<f:facet name="header">
+										<h:outputText value="#{texto.consulDias}" />
+									</f:facet>
+									<h:outputText value="#{vac.dias}" />
+								</p:column>
+
+								<p:column>
+									<f:facet name="header">
+										<h:outputText value="#{texto.consulRegreso}" />
+									</f:facet>
+									<h:outputText value="#{vac.fecha_regreso}"
+										converter="convertDate" />
+								</p:column>
+
+								<p:column>
+
+									<f:facet name="header">
+										<h:outputText value="#{texto.estatus}" />
+									</f:facet>
+									<h:outputText value="#{vac.estatus}"
+										converter="convertAutorizado" />
+
+
+								</p:column>
+							</p:dataTable>
+							<p:dataTable id="tabla2" var="pa"
+								value="#{beanCosultaFormulario.listPapeleria}"
+								rendered="#{beanCosultaFormulario.edito}"
+								paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
+								paginator="true" rows="10" style="margin-bottom:85px"
+								selection="#{beanCosultaFormulario.myPapeleria}"
+								rowKey="#{pa.idPapeleria}" selectionMode="single"
+								editable="true" editMode="cell">
+								<f:facet name="{Exporters}">
+									<h:commandLink>
+										<p:graphicImage library="images" name="excel_logo.png"
+											width="24" />
+										<p:dataExporter type="xls" target="tabla2"
+											fileName="consultass" icon="fa-file-excel-o" />
+									</h:commandLink>
+									<h:commandLink>
+										<p:graphicImage name="/demo/images/csv.png" width="24" />
+										<p:dataExporter type="csv" target="tabla2"
+											fileName="consultass" />
+									</h:commandLink>
+								</f:facet>
+
+								<p:column>
+									<f:facet name="header">
+										<h:outputText value="#{texto.empleado}" />
+									</f:facet>
+									<h:outputText value="#{pa.num_empleado}" />
+								</p:column>
+								<p:column>
+									<f:facet name="header">
+										<h:outputText value="#{texto.departamento}" />
+									</f:facet>
+									<h:outputText value="#{pa.num_empleado.departamento}" />
+								</p:column>
+								<p:column>
+									<f:facet name="header">
+										<h:outputText value="#{texto.papeFecha}" />
+									</f:facet>
+									<h:outputText value="#{pa.feccrea}" converter="convertDate" />
+								</p:column>
+								<p:column>
+									<f:facet name="header">
+										<h:outputText value="SKU" />
+									</f:facet>
+									<h:outputText value="#{pa.sku}" />
+								</p:column>
+								<f:facet name="header">
+									<h:outputText value="#{texto.consulpape}" />
+									<p:ajax event="rowEdit"
+										listener="#{beanConsultaFormulario.edito}" update="tabla2" />
+								</f:facet>
+
+
+								<p:column>
+									<f:facet name="header">
+										<h:outputText value="#{texto.cantidad}" />
+									</f:facet>
+									<h:outputText value="#{pa.cantidad}" />
+								</p:column>
+								<p:column>
+									<f:facet name="header">
+										<h:outputText value="#{texto.material}" />
+									</f:facet>
+									<h:outputText value="#{pa.material}" />
+								</p:column>
+								<p:column>
+									<f:facet name="header">
+										<h:outputText value="#{texto.consulTam}" />
+									</f:facet>
+									<h:outputText value="#{pa.tamano}" />
+								</p:column>
+								<p:column>
+
+									<f:facet name="header">
+										<h:outputText value="#{texto.estatus}" />
+									</f:facet>
+									<h:outputText value="#{pa.estatus}"
+										converter="convertAutorizado" />
+								</p:column>
+							</p:dataTable>
+							<p:dataTable id="tabla3" var="viaje"
+								rendered="#{beanCosultaFormulario.editaviaje}"
+								value="#{beanCosultaFormulario.listGastoViaje}" editable="true"
+								editMode="cell" widgetVar="este"
+								paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
+								paginator="true" rows="10" style="margin-bottom:85px"
+								selection="#{beanCosultaFormulario.myGastoViaje}"
+								rowKey="#{viaje.id_gastoviaje}" selectionMode="single">
+
+								<f:facet name="{Exporters}">
+									<h:commandLink>
+										<p:graphicImage library="images" name="excel_logo.png"
+											width="24" />
+										<p:dataExporter type="xls" target="tabla3"
+											fileName="consultass" icon="fa-file-excel-o" />
+									</h:commandLink>
+									<h:commandLink>
+										<p:graphicImage name="/demo/images/csv.png" width="24" />
+										<p:dataExporter type="csv" target="tabla3"
+											fileName="consultass" />
+									</h:commandLink>
+								</f:facet>
+
+
+								<p:column>
+									<f:facet name="header">
+										<h:outputText value="#{texto.empleado}" />
+									</f:facet>
+									<h:outputText value="#{viaje.numEmpleado.num_empleado}" />
+								</p:column>
+								<p:column>
+									<f:facet name="header">
+										<h:outputText value="#{texto.gastoViajeNombre}" />
+									</f:facet>
+									<h:outputText value="#{viaje.numEmpleado.nombre}" />
+								</p:column>
+
+								<p:column>
+									<f:facet name="header">
+										<h:outputText value="#{texto.gastoViajePuesto}" />
+									</f:facet>
+									<h:outputText value="#{viaje.numEmpleado.puesto}" />
+								</p:column>
+
+								<f:facet name="header">
+									<h:outputText value="#{texto.consulViaticos}" />
+									<p:ajax event="rowEdit"
+										listener="#{beanConsultaFormulario.editaviaje}"
+										update="tabla3" />
+								</f:facet>
+
+								<p:column>
+									<f:facet name="header">
+										<h:outputText value="#{texto.gastoViajeFechaSoli}" />
+									</f:facet>
+									<h:outputText value="#{viaje.fecha_solicitud}"
+										converter="convertDate" />
+								</p:column>
+								<p:column>
+									<f:facet name="header">
+										<h:outputText value="#{texto.gastoViajeNivel}" />
+									</f:facet>
+									<h:outputText value="#{viaje.nivel}" />
+								</p:column>
+								<p:column>
+									<f:facet name="header">
+										<h:outputText value="#{texto.gastoViajeDestino}" />
+									</f:facet>
+									<h:outputText value="#{viaje.destino}" />
+								</p:column>
+
+								<p:column>
+									<f:facet name="header">
+										<h:outputText value="#{texto.gastoViajeMotivo}" />
+									</f:facet>
+									<h:outputText value="#{viaje.motivo}" />
+								</p:column>
+
+
+								<p:column>
+									<f:facet name="header">
+										<h:outputText value="#{texto.gastosViajeFechaInicio}" />
+									</f:facet>
+									<h:outputText value="#{viaje.fecha_inicioviaje}"
+										converter="convertDate" />
+								</p:column>
+
+
+								<p:column>
+									<f:facet name="header">
+										<h:outputText value="#{texto.gastosViajeFechaTermino}" />
+									</f:facet>
+									<h:outputText value="#{viaje.fecha_terminoviaje}"
+										converter="convertDate" />
+								</p:column>
+								<p:column>
+
+									<f:facet name="header">
+										<h:outputText value="#{texto.estatus}" />
+									</f:facet>
+									<h:outputText value="#{vac.estatus}"
+										converter="convertAutorizado" />
+
+
+								</p:column>
+							</p:dataTable>
+							<p:dataTable id="tabla4" var="junta"
+								rendered="#{beanCosultaFormulario.editajuntas}"
+								value="#{beanCosultaFormulario.listJuntas}" editable="true"
+								editMode="cell" widgetVar="esta"
+								paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
+								paginator="true" rows="10" style="margin-bottom:85px"
+								selection="#{beanCosultaFormulario.myJunta}"
+								rowKey="#{junta.idJunta}" selectionMode="single">
+
+								<f:facet name="{Exporters}">
+									<h:commandLink>
+										<p:graphicImage library="images" name="excel_logo.png"
+											width="24" />
+										<p:dataExporter type="xls" target="tabla"
+											fileName="consultass" icon="fa-file-excel-o" />
+									</h:commandLink>
+									<h:commandLink>
+										<p:graphicImage name="/demo/images/csv.png" width="24" />
+										<p:dataExporter type="csv" target="tabla"
+											fileName="consultass" />
+									</h:commandLink>
+								</f:facet>
+
+
+								<p:column>
+									<f:facet name="header">
+										<h:outputText value="#{texto.empleado}" />
+									</f:facet>
+									<h:outputText value="#{junta.numEmpleado}" />
+								</p:column>
+
+
+								<f:facet name="header">
+									<h:outputText value="#{texto.consuljuntas}" />
+									<p:ajax event="rowEdit"
+										listener="#{beanConsultaFormulario.editajuntas}"
+										update="tabla4" />
+								</f:facet>
+								<p:column>
+									<f:facet name="header">
+										<h:outputText value="#{texto.gastoViajeFechaSoli}" />
+									</f:facet>
+									<h:outputText value="#{junta.feccrea}"
+										converter="convertDateTime" />
+								</p:column>
+								<p:column>
+									<f:facet name="header">
+										<h:outputText value="#{texto.fechajuntaInicio}" />
+									</f:facet>
+									<h:outputText value="#{junta.fechaJuntaInicio}"
+										converter="convertDateTime" />
+								</p:column>
+								<p:column>
+									<f:facet name="header">
+										<h:outputText value="#{texto.fechajuntaFin}" />
+									</f:facet>
+									<h:outputText value="#{junta.fechaJuntaFin}"
+										converter="convertDateTime" />
+								</p:column>
+
+								<p:column>
+									<f:facet name="header">
+										<h:outputText value="#{texto.descripcion}" />
+									</f:facet>
+									<h:outputText value="#{junta.descripcion}" />
+								</p:column>
+
+
+
+								<p:column>
+
+									<f:facet name="header">
+										<h:outputText value="#{texto.estatus}" />
+									</f:facet>
+									<h:outputText value="#{junta.estatus}"
+										converter="convertAutorizado" />
+
+
+								</p:column>
+							</p:dataTable>
+							<p:contextMenu id="submenu">
+								<p:menuitem value="Autorizado"
+									disabled="#{beanCosultaFormulario.despachado.booleanValue()}"
+									actionListener="#{beanCosultaFormulario.editarEstatus}"
+									icon="ui-icon-pencil" update="@form" />
+							</p:contextMenu>
+							<br />
+						</div>
+					</b:well>
+				</h:form>
+			</div>
+		</section>
+	</ui:define>
+</ui:composition>

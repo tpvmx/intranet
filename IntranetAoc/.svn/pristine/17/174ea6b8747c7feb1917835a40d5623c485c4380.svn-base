@@ -1,0 +1,288 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui"
+	template="/template/layoutintranet.xhtml"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+	<ui:define name="content">
+		<section class="section-padding">
+			<div class="container-fluid">
+				<h:form>
+					<c:if test="#{beanSession.localeActual.language eq 'es'}">
+						<h:graphicImage
+							value="resources/imagenes/cabeceras/cab_viaticos_es.png"
+							width="100%" />
+					</c:if>
+					<c:if test="#{beanSession.localeActual.language eq 'en'}">
+						<h:graphicImage
+							value="resources/imagenes/cabeceras/cab_viaticos_en.png"
+							width="100%" />
+					</c:if>
+					<div class="container">
+						<b:well>
+							<br />
+							<p:ajaxStatus onstart="PF('statusDialog').show()"
+								oncomplete="PF('statusDialog').hide()" />
+							<br />
+							<b:panelGrid colSpans="3,3,3,3">
+								<b:inputText placeholder="#{texto.gastoViajeNombre}"
+									value="#{beanSession.permisoActual.empleado}" disabled="true"
+									styleClass="text-center" label="#{texto.gastoViajeNombre}" />
+								<b:inputText placeholder="#{texto.gastoViajePuesto}"
+									value="#{beanSession.permisoActual.empleado.puesto}"
+									disabled="true" styleClass="text-center"
+									label="#{texto.gastoViajePuesto}" />
+								<b:inputText placeholder="#{texto.gastoViajeNumEmpl}"
+									disabled="true" styleClass="text-center"
+									value="#{beanSession.permisoActual.empleado.num_empleado}"
+									label="#{texto.gastoViajeNumEmpl}" />
+								<p:outputLabel />
+								<b:inputText placeholder="#{texto.gastoViajeTarjeta}"
+									styleClass="text-center" mask="9{1,4}-9{1,4}-9{1,4}-9{1,4}"
+									label="#{texto.gastoViajeTarjeta}"
+									value="#{beanSession.permisoActual.empleado.tarjeta}"
+									disabled="true" />
+								<b:inputText placeholder="#{texto.gastoViajeBanco}"
+									styleClass="text-center" label="#{texto.gastoViajeBanco}"
+									value="#{beanSession.permisoActual.empleado.banco}"
+									disabled="true" />
+								<b:inputText placeholder="#{texto.gastoViajeClabe}"
+									styleClass="text-center" label="#{texto.gastoViajeClabe}"
+									mask="numeric"
+									value="#{beanSession.permisoActual.empleado.clabe}"
+									disabled="true" maxlength="18" />
+								<b:inputText placeholder="#{texto.gastoViajeCuenta}"
+									mask="numeric" styleClass="text-center"
+									label="#{texto.gastoViajeCuenta}"
+									value="#{beanSession.permisoActual.empleado.cuenta}"
+									disabled="true" maxlength="16" />
+								<b:panelGrid colSpans="12">
+									<p:outputLabel styleClass="control-label"
+										value="#{texto.gastoViajeFechaSoli}:" />
+									<p:calendar id="end"
+										locale="#{beanSession.localeActual.language}"
+										value="#{beanGastoViaje.myGastoViaje.fecha_solicitud}"
+										pattern="dd/MM/yyyy" showOn="button" />
+								</b:panelGrid>
+							</b:panelGrid>
+							<br />
+							<b:panelGrid colSpans="3,3,3,3">
+								<b:selectBooleanCheckbox id="tableta"
+									caption="#{texto.gastoViajeTableta}"
+									value="#{beanGastoViaje.checktableta}"
+									onchange="ajax:beanGastoViaje.validaCampos()" ajax="true"
+									update="@form" />
+								<b:selectBooleanCheckbox id="telefono"
+									caption="#{texto.gastoViajeTelefono}"
+									onchange="ajax:beanGastoViaje.validaCampos()" ajax="true"
+									update="@form" value="#{beanGastoViaje.checktelefono}" />
+								<b:selectBooleanCheckbox id="monitor"
+									caption="#{texto.gastoViajeMonitor}"
+									onchange="ajax:beanGastoViaje.validaCampos()" ajax="true"
+									update="@form" value="#{beanGastoViaje.checkmonitor}" />
+								<p:outputLabel />
+								<b:inputText placeholder="#{texto.gastoViajePorcentaje}"
+									mask="numeric" maxlength="10"
+									value="#{beanGastoViaje.myGastoViaje.portableta}"
+									disabled="#{beanGastoViaje.tableta}" styleClass="text-center" />
+								<b:inputText placeholder="#{texto.gastoViajePorcentaje}"
+									mask="numeric" maxlength="10"
+									value="#{beanGastoViaje.myGastoViaje.portelefono}"
+									disabled="#{beanGastoViaje.telefono}" styleClass="text-center" />
+								<b:inputText placeholder="#{texto.gastoViajePorcentaje}"
+									mask="numeric" maxlength="10"
+									value="#{beanGastoViaje.myGastoViaje.pormonitor}"
+									disabled="#{beanGastoViaje.monitor}" styleClass="text-center" />
+								<p:outputLabel></p:outputLabel>
+							</b:panelGrid>
+							<br />
+							<div class="lineaCustomeBebasBook">
+								<h3>#{texto.gastoViajeInformacion}</h3>
+							</div>
+							<b:panelGrid colSpans="6,6">
+								<b:inputText placeholder="#{texto.gastoViajeDestino}"
+									styleClass="text-center" label="#{texto.gastoViajeDestino}"
+									value="#{beanGastoViaje.myGastoViaje.destino}" />
+								<b:inputText placeholder="#{texto.gastoViajeMotivo}"
+									styleClass="text-center"
+									value="#{beanGastoViaje.myGastoViaje.motivo}"
+									label="#{texto.gastoViajeMotivo}" />
+							</b:panelGrid>
+							<b:panelGrid colSpans="3,3,3,3">
+								<b:panelGrid colSpans="12">
+									<p:outputLabel styleClass="control-label"
+										value="#{texto.gastosViajeFechaInicio}" />
+									<p:calendar showOn="button"
+										value="#{beanGastoViaje.myGastoViaje.fecha_inicioviaje}">
+										<p:ajax event="dateSelect"
+											listener="#{beanGastoViaje.validaFechaInicio()}"
+											update="@form" />
+									</p:calendar>
+								</b:panelGrid>
+								<b:panelGrid colSpans="12">
+									<p:outputLabel styleClass="control-label"
+										value="#{texto.gastosViajeFechaTermino}:" />
+									<p:calendar showOn="button"
+										value="#{beanGastoViaje.myGastoViaje.fecha_terminoviaje}">
+										<p:ajax event="dateSelect"
+											oncomplete="#{beanGastoViaje.cambiaListaDias()}"
+											update="addList :#{p:component('totaltotal')}" />
+									</p:calendar>
+								</b:panelGrid>
+								<p:commandButton id="addList" icon="fa fa-plus"
+									value="#{texto.gastoTableConcept}"
+									actionListener="#{beanGastoViaje.addConcepto}"
+									styleClass="btn-md btnCustome" update="pnlDatatable " />
+							</b:panelGrid>
+							<br />
+							<b:panelGrid id="pnlDatatable" colSpans="12">
+								<b:panelGrid colSpans="10,2">
+									<p:outputLabel id="totaltotal"
+										value="TOTAL: #{beanGastoViaje.myGastoDetalle.total}"
+										style="color:red"></p:outputLabel>
+								</b:panelGrid>
+								<p:dataTable id="tablaGastoViaje1" var="gasto" editable="true"
+									editMode="cell" value="#{beanGastoViaje.listGastos}"
+									tabindex="cont" style="margin-bottom:85px">
+									<p:ajax event="rowToggle" update="tablaGastoViaje1" />
+									<p:column styleClass="text-center"
+										headerText="#{texto.gastoTableOrden}" width="5%">
+										<h:outputText value="#{gasto.orden}" />
+									</p:column>
+									<p:column styleClass="text-center"
+										headerText="#{texto.gastoTableConcept}" width="10%">
+										<p:cellEditor>
+											<f:facet name="output">
+												<h:outputText value="#{gasto.concepto}" />
+											</f:facet>
+											<f:facet name="input">
+												<p:inputText value="#{gasto.concepto}" style="width:96%" />
+											</f:facet>
+										</p:cellEditor>
+									</p:column>
+									<p:column styleClass="text-center" style="width:1%">
+										<p:rowToggler />
+									</p:column>
+									<p:rowExpansion>
+										<p:dataTable id="tablaGastoViaje" var="dia" editable="true"
+											editMode="cell" value="#{gasto.listDias}">
+											<p:column headerText="Dia" width="5%">
+												<h:outputText value="#{dia.dia}" />
+											</p:column>
+											<p:column styleClass="text-center"
+												headerText="#{texto.gastoTableValue}" width="5%">
+												<p:cellEditor>
+													<f:facet name="output">
+														<h:outputText value="#{dia.valor}" />
+													</f:facet>
+													<f:facet name="input">
+														<p:inputText value="#{dia.valor}" style="width:10%">
+														</p:inputText>
+													</f:facet>
+												</p:cellEditor>
+											</p:column>
+										</p:dataTable>
+									</p:rowExpansion>
+									<p:column styleClass="text-center" headerText="Total"
+										width="10%">
+										<h:outputText value="#{gasto.total}" />
+									</p:column>
+									<p:column styleClass="text-center" width="5%"
+										headerText="#{texto.calenEliminar}">
+										<p:commandButton
+											actionListener="#{beanGastoViaje.eliminarConcepto(gasto.orden)}"
+											update="@form" icon="fa fa-trash"
+											styleClass="btn btn-md btn-danger">
+										</p:commandButton>
+									</p:column>
+								</p:dataTable>
+							</b:panelGrid>
+							<b:panelGrid colSpans="3,3,3,3">
+								<p:outputLabel></p:outputLabel>
+								<p:commandButton id="nuevo" action="#{beanGastoViaje.nuevo()}"
+									value="#{texto.gastoViajeNuevo}" icon="fa fa-plus"
+									styleClass="btn-md btnCustomeGrey" update="@form" />
+								<p:commandButton id="Save" value="#{texto.gastoViajeGuardar}"
+									icon="fa fa-save" disabled="#{beanGastoViaje.save}"
+									actionListener="#{beanGastoViaje.guardaGasto()}"
+									styleClass="btn-md btnCustome" update="@form">
+									<p:confirm header="#{texto.gastoMsgHeaderConfir}"
+										message="#{texto.gastoMsgConfirma}" icon="ui-icon-alert" />
+								</p:commandButton>
+								<p:commandButton id="btnImpresion"
+									actionListener="#{beanGastoViaje.gastoReporte}"
+									icon="fa fa-print" styleClass="btn-md btnCustomeAzul"
+									value="Imprime Ultimo" update="@form" type="submit"
+									ajax="false">
+								</p:commandButton>
+							</b:panelGrid>
+							<p:messages id="messages" showDetail="true" closable="true" />
+						</b:well>
+						<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+							<p:commandButton value="#{texto.noticiaResumenSi}" type="button"
+								styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+							<p:commandButton value="No" type="button"
+								styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+						</p:confirmDialog>
+						<br/>
+						<div class="lineaCustomeCenter">
+							<h3>#{texto.generalPendientes}</h3>
+						</div>
+						<br />
+						<p:dataTable paginator="true" id="tablaReporte"
+							value="#{beanGastoViaje.listGastosInactivos}" var="inac" rows="5">
+							<p:column styleClass="text-center"
+								headerText="#{texto.gastoViajeNombre}" width="5%">
+								<h:outputText value="#{inac.numEmpleado}" />
+							</p:column>
+							<p:column styleClass="text-center"
+								headerText="#{texto.gastoViajeDestino}" width="5%">
+								<h:outputText value="#{inac.destino}" />
+							</p:column>
+							<p:column styleClass="text-center"
+								headerText="#{texto.gastoViajeMotivo}" width="5%">
+								<h:outputText value="#{inac.motivo}" />
+							</p:column>
+							<p:column styleClass="text-center"
+								headerText="#{texto.gastoViajeFechaSoli}" width="5%">
+								<h:outputText value="#{inac.fecha_solicitud}"
+									converter="convertDate" />
+							</p:column>
+							<p:column styleClass="text-center"
+								headerText="#{texto.gastosViajeFechaInicio}" width="5%">
+								<h:outputText value="#{inac.fecha_inicioviaje}"
+									converter="convertDate" />
+							</p:column>
+							<p:column styleClass="text-center"
+								headerText="#{texto.gastosViajeFechaTermino}:" width="5%">
+								<h:outputText value="#{inac.fecha_terminoviaje}"
+									converter="convertDate" />
+							</p:column>
+							<p:column styleClass="text-center" width="5%">
+								<f:facet name="header">
+									<h:outputText value="#{texto.eliminar}" />
+								</f:facet>
+								<!-- es para direccionar a una vista -->
+								<p:commandButton icon="fa fa-trash"
+									styleClass="btn btn-md btn-danger"
+									actionListener="#{beanGastoViaje.eliminaRegistro(inac)}"
+									update="@form">
+									<p:confirm header="#{texto.noticiaResumenConfirma}"
+										message="#{texto.gastoViajeSeguro}" icon="ui-icon-alert" />
+								</p:commandButton>
+								<p:confirmDialog global="true" showEffect="fade"
+									hideEffect="fade">
+									<p:commandButton value="#{texto.noticiaResumenSi}"
+										styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+									<p:commandButton value="No" type="button"
+										styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+								</p:confirmDialog>
+							</p:column>
+						</p:dataTable>
+					</div>
+				</h:form>
+			</div>
+		</section>
+	</ui:define>
+</ui:composition>

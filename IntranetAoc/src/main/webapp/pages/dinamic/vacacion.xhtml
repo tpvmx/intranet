@@ -1,0 +1,166 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui"
+	template="/template/layoutintranet.xhtml"
+	xmlns:c="http://java.sun.com/jstl/core">
+	<ui:define name="content">
+		<section class="feature">
+			<div class="container-fluid">
+				<h:form id="form">
+					<p:ajaxStatus onstart="PF('statusDialog').show()"
+						oncomplete="PF('statusDialog').hide()" />
+					<c:if test="#{beanSession.localeActual.language eq 'es'}">
+						<h:graphicImage
+							value="resources/imagenes/cabeceras/cab_vacaciones_es.png"
+							width="100%" />
+					</c:if>
+					<c:if test="#{beanSession.localeActual.language eq 'en'}">
+						<h:graphicImage
+							value="resources/imagenes/cabeceras/cab_vacaciones_en.png"
+							width="100%" />
+					</c:if>
+					<div class="container">
+						<b:well>
+							<br />
+							<b:panelGrid colSpans="3,3,3,3">
+								<b:panelGrid colSpans="12">
+									<p:outputLabel styleClass="control-label"
+										value="#{texto.gastoViajeFechaSoli}" />
+									<p:calendar locale="#{beanSession.localeActual.language}"
+										value="#{beanVacacion.myVacacion.feccrea}"
+										pattern="dd/MM/yyyy" showOn="button" />
+								</b:panelGrid>
+								<p:outputLabel />
+								<p:outputLabel />
+								<p:outputLabel />
+								<b:inputText placeholder="#{texto.vacacionNumEmpleado}"
+									styleClass="text-center" disabled="true"
+									value="#{beanSession.permisoActual.empleado.num_empleado}"
+									label="#{texto.vacacionNumEmpleado}" />
+								<b:inputText placeholder="#{texto.vacacionDepartamento}"
+									styleClass="text-center" disabled="true"
+									value="#{beanSession.permisoActual.empleado.departamento}"
+									label="#{texto.vacacionDepartamento}" />
+								<b:inputText placeholder="#{texto.vacacionPuesto}"
+									styleClass="text-center" disabled="true"
+									value="#{beanSession.permisoActual.empleado.puesto}"
+									label="#{texto.vacacionPuesto}" />
+								<b:dateTimePicker format="DD/MM/YYYY"
+									label="#{texto.vacacionFechaIngreso}" styleClass="text-center"
+									disabled="true"
+									value="#{beanVacacion.myEmpleado.fecha_ingreso}" />
+								<b:panelGrid colSpans="12">
+									<p:outputLabel styleClass="control-label"
+										value="#{texto.vacacionFechaInicial}" />
+									<p:calendar locale="#{beanSession.localeActual.language}"
+										value="#{beanVacacion.myVacacion.fecha_inicial}"
+										pattern="dd/MM/yyyy" showOn="button" />
+								</b:panelGrid>
+								<b:panelGrid colSpans="12">
+									<p:outputLabel styleClass="control-label"
+										value="#{texto.vacacionFechaFinal}" />
+									<p:calendar locale="#{beanSession.localeActual.language}"
+										value="#{beanVacacion.myVacacion.fecha_final}"
+										pattern="dd/MM/yyyy" showOn="button" />
+								</b:panelGrid>
+								<b:inputText placeholder="#{texto.vacacionDias}"
+									styleClass="text-center" label="#{texto.vacacionDias}"
+									value="#{beanVacacion.myVacacion.dias}" />
+								<b:panelGrid colSpans="12">
+									<p:outputLabel styleClass="control-label"
+										value="#{texto.vacacionFechaRegreso}" />
+									<p:calendar locale="#{beanSession.localeActual.language}"
+										value="#{beanVacacion.myVacacion.fecha_regreso}"
+										pattern="dd/MM/yyyy" showOn="button" />
+								</b:panelGrid>
+							</b:panelGrid>
+							<b:panelGrid colSpans="6,6">
+								<b:inputTextarea
+									placeholder="#{texto.vacacionObservacionesPlace}"
+									value="#{beanVacacion.myVacacion.observaciones}"
+									label="#{texto.vacacionObservaciones}" rows="2">
+								</b:inputTextarea>
+							</b:panelGrid>
+							<b:panelGrid colSpans="4,8">
+								<p:dataList value="#{beanVacacion.listVacaciones}" var="vac"
+									type="ordered">
+									<f:facet name="header">
+                  						#{texto.vacacionDiasAcumu} = #{beanVacacion.totalAcumulado}
+                   					</f:facet>
+                   		 			 	#{beanVacacion.simpleDateFormat.format(vac.fecha_inicial)} - #{beanVacacion.simpleDateFormat.format(vac.fecha_final)} / #{vac.dias}
+                      			</p:dataList>
+								<b:panelGrid colSpans="4,4,4">
+									<p:commandButton id="limpia" icon="fa fa-refresh"
+										value="#{texto.nuevo}"
+										actionListener="#{beanVacacion.limpiaCampos()}"
+										styleClass="btn-md btnCustomeGrey" update="@form" />
+									<p:commandButton id="addButton" icon="fa fa-save"
+										actionListener="#{beanVacacion.guardaVacacion}"
+										styleClass="btn-md btnCustome"
+										value="#{texto.vacacionGuardar}" update="@form">
+									</p:commandButton>
+									<p:commandButton id="btnImprimir" icon="fa fa-print"
+										actionListener="#{beanVacacion.vacacionReporte}"
+										styleClass="btn-md btnCustomeAzul" value="Imprimir Ultimo"
+										update="@form" ajax="false" type="submit">
+									</p:commandButton>
+								</b:panelGrid>
+							</b:panelGrid>
+
+							<p:messages id="messages" showDetail="true" closable="true" />
+							<br></br>
+						</b:well>
+						<br></br>
+						<div class="lineaCustomeCenter">
+							<h3>#{texto.diasPendientes}</h3>
+						</div>
+						<p:dataTable var="vaca" value="#{beanVacacion.listVaca}"
+							id="tablaVaca">
+							<p:column headerText="#{texto.gastoViajeFechaSoli}" width="15%">
+								<h:outputText value="#{vaca.feccrea}" converter="convertDate" />
+							</p:column>
+							<p:column headerText="#{texto.vacacionFechaInicial}" width="15%">
+								<h:outputText value="#{vaca.fecha_inicial}"
+									converter="convertDate" />
+							</p:column>
+							<p:column headerText="#{texto.vacacionFechaFinal}" width="15%">
+								<h:outputText value="#{vaca.fecha_final}"
+									converter="convertDate" />
+							</p:column>
+							<p:column headerText="#{texto.vacacionDias}" width="5%">
+								<h:outputText value="#{vaca.dias}" />
+							</p:column>
+							<p:column styleClass="text-center" width="5%">
+								<f:facet name="header">
+									<h:outputText value="#{texto.eliminar}" />
+								</f:facet>
+								<!-- es para direccionar a una vista -->
+								<p:commandButton icon="fa fa-trash"
+									styleClass="btn btn-md btn-danger"
+									actionListener="#{beanVacacion.eliminaVacacion(vaca)}"
+									update="@form tablaVaca">
+									<p:confirm header="#{texto.noticiaResumenConfirma}"
+										message="#{texto.vacacionSeguro}" icon="ui-icon-alert" />
+								</p:commandButton>
+								<p:confirmDialog global="true" showEffect="fade"
+									hideEffect="fade">
+									<p:commandButton value="#{texto.noticiaResumenSi}"
+										styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+									<p:commandButton value="No" type="button"
+										styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+								</p:confirmDialog>
+							</p:column>
+						</p:dataTable>
+					</div>
+				</h:form>
+			</div>
+		</section>
+		<style type="text/css">
+.ui-inputfield {
+	width: 82%;
+}
+</style>
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui">
+<h:body>
+
+	<ui:composition template="../../template/layout.xhtml">
+		<ui:define name="content">
+			<h:form id="form">
+				<p:growl id="msjs" showDetail="true" />
+				<b:panel title="#{texto.dicAltausuario}" look="primary" showCollapseLink="true">
+					<b:panelGrid columns="3">
+					</b:panelGrid>
+					<b:panelGrid colSpans="4,4,4">
+						<p:outputLabel value="#{texto.dicUsuario}:"></p:outputLabel>
+						<p:outputLabel></p:outputLabel>
+						<p:outputLabel></p:outputLabel>
+						<p:inputText id="username" onkeypress="value=value.toUpperCase()"
+							value="#{beanMttoAltaUsuario.myUsuario.usuario}"></p:inputText>
+						<p:commandButton id="buscar" icon="fa fa-search"
+							actionListener="#{beanMttoAltaUsuario.buscaUsuario()}"
+							update="@form" styleClass="btn btn-md btn-primary" />
+						<p:outputLabel></p:outputLabel>
+						<p:outputLabel value="#{texto.dicNombre}:"></p:outputLabel>
+						<p:outputLabel value="#{texto.dicApellidopaterno}:"></p:outputLabel>
+						<p:outputLabel value="#{texto.dicApellidomaterno}:"></p:outputLabel>
+						<p:inputText id="nombre" onkeypress="value=value.toUpperCase()"
+							value="#{beanMttoAltaUsuario.myUsuario.nombre}"></p:inputText>
+						<p:inputText id="Paterno" onkeypress="value=value.toUpperCase()"
+							value="#{beanMttoAltaUsuario.myUsuario.paterno}"></p:inputText>
+						<p:inputText id="Materno" onkeypress="value=value.toUpperCase()"
+							value="#{beanMttoAltaUsuario.myUsuario.materno}"></p:inputText>
+						<p:outputLabel value="#{texto.dicestatus}:"></p:outputLabel>
+						<p:outputLabel value="#{texto.dicReinicio}:"></p:outputLabel>
+						<br />
+						<p:selectBooleanCheckbox id="estatus"
+							value="#{beanMttoAltaUsuario.myUsuario.estatusBole}" />
+						<b:switch id="reseteo"
+							value="#{beanMttoAltaUsuario.myUsuario.reseteadoBole}"
+							offColor="danger" onColor="primary"></b:switch>
+						<p:outputLabel value="#{texto.dicFechanacimiento}:"></p:outputLabel>
+						<p:outputLabel value="#{texto.dicCorreo}:"></p:outputLabel>
+						<b:inputText value="#{beanMttoAltaUsuario.myUsuario.correo}"
+							mask="email" render-label="true" />
+						<p:calendar id="effect"
+							value="#{beanMttoAltaUsuario.myUsuario.fecha_nacimiento}"
+							effect="fold" navigator="true" pattern="yyyy-MM-dd" />
+						<p:outputLabel></p:outputLabel>
+						<p:outputLabel></p:outputLabel>
+						<p:outputLabel></p:outputLabel>
+					</b:panelGrid>
+					<b:panelGrid colSpans="4,4,4" id="permisos" var="actual">
+						<br />
+						<b:selectOneMenu id="tipoUsuario" label="#{texto.dicTipousuario}"
+							value="#{beanMttoAltaUsuario.myUsuario.tempTipoUsuario}"
+							onchange="ajax:beanMttoAltaUsuario.seleccionaTipoUser()"
+							ajax="true" update="@form">
+							<f:selectItems value="#{beanMttoAltaUsuario.tipoUser}"
+								itemValue="#{ti.idTipoUsuario}" var="ti"
+								itemLabel="#{ti.descripcion}" />
+						</b:selectOneMenu>
+						<br />
+					</b:panelGrid>
+					<b:panelGrid colSpans="6,6">
+						<p:commandButton id="nuevo"
+							action="#{beanMttoAltaUsuario.nuevo()}" value="#{texto.dicnuevo}"
+							icon="fa fa-plus" styleClass="btn btn-lg btn-warning" size="lg"
+							update="@form" />
+						<p:commandButton id="guardar" value="#{texto.dicguardar}" size="lg"
+							update="@form"
+							actionListener="#{beanMttoAltaUsuario.altaUsuario}"
+							icon="fa fa-save" styleClass="btn btn-lg btn-primary" />
+
+					</b:panelGrid>
+				</b:panel>
+				<b:panel title="#{texto.dicPermisos}" look="primary" showCollapseLink="true">
+					<br />
+					<b:panelGrid colSpans="12" id="Inter"
+						rendered="#{beanMttoAltaUsuario.forInter}">
+						<b:panelGrid colSpans="4,4,4">
+							<b:selectOneMenu id="perfiles" label="Perfiles"
+								value="#{beanMttoAltaUsuario.myperfil}">
+								<f:selectItems value="#{beanMttoAltaUsuario.listPerfil}"
+									var="pe" itemValue="#{pe}" itemLabel="#{pe.descripcion}" />
+							</b:selectOneMenu>
+							<b:commandButton id="addParcial1" value="Agregar"
+								iconAwesome="plus" look="primary" size="md"
+								actionListener="#{beanMttoAltaUsuario.agregarPerfil}"
+								update="tblAgregadosInter" />
+							<p:dataList id="tblAgregadosInter" type="unordered"
+								value="#{beanMttoAltaUsuario.listPerfilesAsignados}" var="per"
+								itemType="none">
+								<f:facet name="header">
+						            Salida
+						        </f:facet>
+								<p:commandLink styleClass="fa fa-trash"
+									actionListener="#{beanMttoAltaUsuario.elimina(per)}"
+									update="tblAgregadosInter" style="float:left;margin-right:5px">
+									<p:confirm header="Confirmación"
+										message="#{texto.dicEliminarperfil}"
+										icon="ui-icon-alert" />
+								</p:commandLink>
+						        #{per.perfil.descripcion}
+							</p:dataList>
+						</b:panelGrid>
+					</b:panelGrid>
+					<b:panelGrid colSpans="12" id="Centro"
+						rendered="#{beanMttoAltaUsuario.forCent}">
+						<b:panelGrid colSpans="4,4,4">
+							<b:selectOneMenu id="centros" label="Centros Servicio"
+								value="#{beanMttoAltaUsuario.centro}">
+								<f:selectItems value="#{beanMttoAltaUsuario.listCentro}"
+									var="ce" itemValue="#{ce}" itemLabel="#{ce.descripcion}" />
+							</b:selectOneMenu>
+							<b:commandButton id="addCentro" value="Agregar" iconAwesome="plus"
+								look="primary" size="md" actionListener="#{beanMttoAltaUsuario.agregaCentro}" 
+								update="tblAgregadosCentros"/>
+							<p:dataList id="tblAgregadosCentros" type="unordered"
+							  value="#{beanMttoAltaUsuario.listCentrosAsignados}" var="cen"
+								itemType="none">
+								<f:facet name="header">
+						            Salida
+						        </f:facet>
+						        <p:commandLink styleClass="fa fa-trash"
+									actionListener="#{beanMttoAltaUsuario.eliminaCentro(cen)}"
+									update="tblAgregadosCentros" style="float:left;margin-right:5px">
+									<p:confirm header="Confirmación"
+										message="#{texto.dicEliminarcentroservicio}"
+										icon="ui-icon-alert" />
+								</p:commandLink>
+						        #{cen.centroServicio.descripcion}
+							</p:dataList>
+						</b:panelGrid>
+					</b:panelGrid>
+				</b:panel>
+				<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+					<p:commandButton value="Si" type="button"
+						styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+					<p:commandButton value="No" type="button"
+						styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+				</p:confirmDialog>
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

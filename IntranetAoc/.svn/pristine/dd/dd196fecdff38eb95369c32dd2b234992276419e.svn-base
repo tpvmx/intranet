@@ -1,0 +1,85 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui"
+	template="/template/index.xhtml">
+	<ui:define name="content">
+		<div class="container">
+			<div class="row">
+				<h:head>
+					<f:metadata>
+						<f:viewParam name="token" value="#{beanContrasenia.token}" />
+						<f:viewParam name="restablecimiento"
+							value="#{beanContrasenia.restablecimiento}" />
+						<f:viewAction action="#{beanContrasenia.buscarToken}" />
+					</f:metadata>
+				</h:head>
+				<h:form id="form">
+					<div id="restablecerContra">
+						<br /> <br />
+						<b:panel id="panel1" title="Restablecer contraseña" look="primary"
+							collapsible="true" collapsed="false" iconAwesome="fa fa-list-ol"
+							life="5000">
+							<b:messages id="msg" escape="false" />
+							<div class="fea">
+								<div class="col-md-4">
+									<div class="heading pull-right">
+										<h4>#{texto.cambioPass}</h4>
+										<p>
+											Mínimo 8 caractéres<br /> Por lo menos un número
+											[0,1,2,3..0] <br /> Por lo menos una mayúscula [A,B,C..Z]<br />
+											Por lo menos una minúscula [a,b,c..z]<br /> Por lo menos UNO
+											de los siguientes: @#%.$^+=
+										</p>
+									</div>
+									<div class="fea-img pull-left">
+										<i class="fa fa-trophy"></i>
+									</div>
+								</div>
+							</div>
+							<b:panelGrid colSpans="4,8">
+								<b:panelGrid colSpans="12">
+									<b:label severity="danger"
+										value="Usuario a Restablecer: #{beanContrasenia.nombreUsuarioRestablece}" />
+									<hr />
+									<b:inputSecret label="Nueva contraseña:" field-size="sm"
+										disabled="#{beanContrasenia.invalido}"
+										value="#{beanContrasenia.nuevaContrasenia}" required="true"
+										requiredMessage="Indique nueva contraseña"
+										validatorMessage="La contraseña no cumple con los requisitos principales.">
+										<f:validateRegex
+											pattern="(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[@#%.\\$^\\+=]).{8,}$" />
+										<f:facet name="prepend">
+											<b:iconAwesome name="key" />
+										</f:facet>
+									</b:inputSecret>
+									<b:inputSecret label="Confirma contraseña:" field-size="sm"
+										disabled="#{beanContrasenia.invalido}"
+										value="#{beanContrasenia.nuevaContraseniaConfirma}"
+										required="true"
+										requiredMessage="Indique la confirmacion de contraseña"
+										validatorMessage="La contraseña no cumple con los requisitos principales.">
+										<f:validateRegex
+											pattern="(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[@#%.\\$^\\+=]).{8,}$" />
+										<f:facet name="prepend">
+											<b:iconAwesome name="key" />
+										</f:facet>
+									</b:inputSecret>
+									<b:commandButton id="button" value="Cambiar" size="lg"
+										look="success" ajax="false"
+										disabled="#{beanContrasenia.invalido}"
+										action="#{beanContrasenia.cambiarContrasenia}" update="@form"
+										iconAwesome="check">
+									</b:commandButton>
+									<hr />
+									<p:link value="Generar token valido." href="/restablecer" />
+								</b:panelGrid>
+							</b:panelGrid>
+						</b:panel>
+					</div>
+				</h:form>
+			</div>
+		</div>
+	</ui:define>
+</ui:composition>

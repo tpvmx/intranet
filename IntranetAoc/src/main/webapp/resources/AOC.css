@@ -1,0 +1,125 @@
+/*
+	Aoc by VSP-LGONZALEZ
+*/
+.panelNoBorder, .panelNoBorder tr, .panelNoBorder td {
+	border: hidden;
+	border-bottom: white;
+}
+
+.form-signin {
+	margin: 0 auto;
+	width: 430px;
+	padding: 15px;
+	max-width: 100%;
+}
+
+.ui-growl {
+	top: 60px !important;
+}
+
+body {
+	color: #888;
+	line-height: 20px;
+	text-align: center;
+	background: url("#{resource['images/backgroundNew.jpg']}") no-repeat;
+	background-size: cover;
+}
+
+.login {
+	border-radius: 67px 67px 67px 67px;
+	-moz-border-radius: 67px 67px 67px 67px;
+	-webkit-border-radius: 67px 67px 67px 67px;
+	background: rgba(0, 0, 0, 0.3);
+}
+
+<!--
+STEPS FACES CUSTOME-->.ui-state-highlight {
+	text-shadow: none !important;
+}
+
+.ui-steps.custom {
+	margin-bottom: 30px;
+}
+
+.ui-steps.custom .ui-steps-item .ui-menuitem-link {
+	height: 10px;
+	padding: 0 1em;
+}
+
+.ui-steps.custom .ui-steps-item .ui-steps-number {
+	background-color: #b60322;
+	color: #FFFFFF;
+	display: inline-block;
+	border-radius: 10px;
+	margin-top: -10px;
+	margin-bottom: 10px;
+}
+
+.ui-steps.custom .ui-steps-item.ui-state-highlight .ui-steps-title {
+	color: #555;
+}
+
+<!--
+STEPS BOOTSTRAP -->.stepwizard-step p {
+	margin-top: 10px;
+}
+
+.stepwizard-row {
+	display: table-row;
+}
+
+.stepwizard {
+	display: table;
+	width: 50%;
+	position: relative;
+}
+
+.stepwizard-step button[disabled] {
+	opacity: 1 !important;
+	filter: alpha(opacity = 100) !important;
+}
+
+.stepwizard-row:before {
+	top: 14px;
+	bottom: 0;
+	position: absolute;
+	content: " ";
+	width: 100%;
+	height: 1px;
+	background-color: #ccc;
+	z-order: 0;
+}
+
+.stepwizard-step {
+	display: table-cell;
+	text-align: center;
+	position: relative;
+}
+
+.btn-circle {
+	width: 60px;
+	height: 60px;
+	text-align: center;
+	padding: 6px 0;
+	font-size: 12px;
+	line-height: 1.428571429;
+	border-radius: 15px;
+}
+
+.rowRed {
+	background-color: #FA5858;
+	background-image: none;
+}
+
+.rowGray {
+	background-color: #A4A4A4;
+}
+
+.someCssClassName {
+	background: url("#{resource['images/excel_logo.png']}") no-repeat;
+}
+
+.textHeader {
+	background:#00537B; 
+	color: white;
+}

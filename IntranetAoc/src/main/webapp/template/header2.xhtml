@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:b="http://bootsfaces.net/ui">
+<ui:composition>
+	<!-- START HEADER-->
+	<f:view contentType="text/html" locale="#{beanSession.localeActual}">
+		<h:form>
+			<f:loadBundle basename="com.locate.aoc.message" var="texto" />
+			<!--Navigation bar-->
+			<nav
+				class="navbar fixed-top navbar-light navbar-expand-md bg-faded justify-content-center"
+				style="background: white;">
+			<div class="navbar-header">
+				<button class="navbar-toggler" type="button" data-toggle="collapse"
+					data-target="#collapsingNavbar3">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+			</div>
+			<a href="#{request.contextPath}/inicio"
+				class="navbar-brand d-flex w-50 mr-auto"><h:graphicImage
+					library="imagenes" name="aoc_logo.png" styleClass="img-responsive" /></a>
+			<div class="navbar-collapse collapse w-100" id="collapsingNavbar3">
+				<ul class="nav navbar-nav ml-auto w-100 justify-content-end">
+					<li class="nav-item dropdown"><a
+						class="nav-link dropdown-toggle"
+						id="navbarDropdownMenuLink" data-toggle="dropdown"
+						aria-haspopup="true" aria-expanded="false">#{texto.headerPerfil}</a>
+						<div class="dropdown-menu"
+							aria-labelledby="navbarDropdownMenuLink">
+							<a class="dropdown-item" href="#{request.contextPath}/historia">#{texto.headerHistoria}</a> <a
+								class="dropdown-item" href="#{request.contextPath}/organigrama">#{texto.headerOrganigrama}</a>
+						</div></li>
+					<li class="nav-item"><a class="nav-link" href="#{request.contextPath}/calendario">#{texto.headerCalendario}</a>
+					</li>
+					<li class="nav-item dropdown"><a
+						class="nav-link dropdown-toggle"
+						id="navbarDropdownMenuLink" data-toggle="dropdown"
+						aria-haspopup="true" aria-expanded="false">#{texto.headerForm} </a>
+						<div class="dropdown-menu"
+							aria-labelledby="navbarDropdownMenuLink">
+							<a class="dropdown-item" href="#{request.contextPath}/papeleria">#{texto.headerPapeleria}</a> <a
+								class="dropdown-item" href="#{request.contextPath}/juntas">#{texto.headerJuntas}</a> <a
+								class="dropdown-item" href="#{request.contextPath}/vacacion">#{texto.headerVacaciones}</a> <a
+								class="dropdown-item" href="#{request.contextPath}/Gasto">#{texto.headerViaticos}</a>
+						</div></li>
+
+					<li class="nav-item dropdown"><a
+						class="nav-link dropdown-toggle"
+						id="navbarDropdownMenuLink" data-toggle="dropdown"
+						aria-haspopup="true" aria-expanded="false"> #{texto.headerAdmin} </a>
+						<div class="dropdown-menu"
+							aria-labelledby="navbarDropdownMenuLink">
+							<a class="dropdown-item" href="#{request.contextPath}/noticiaResumen">#{texto.headerNoticiaActiva}</a> <a
+								class="dropdown-item" href="#{request.contextPath}/consultaformulario">#{texto.headerConsulta}</a>
+						</div></li>
+
+					<li class="nav-item"><a class="nav-link"
+						id="navbarDropdownMenuLink"
+						style="font-size: 15px !important; color: #797979 !important;">
+							¡#{texto.bienvenido}! <strong>#{beanSession.permisoActual.empleado}</strong>
+					</a></li>
+					<li class="nav-item dropdown"><a
+						class="nav-link dropdown-toggle fa fa-globe" href="#"
+						id="navbarDropdownMenuLink" data-toggle="dropdown"
+						aria-haspopup="true" aria-expanded="false"> </a>
+						<div class="dropdown-menu"
+							aria-labelledby="navbarDropdownMenuLink">
+							<p:commandLink styleClass="dropdown-item" title="Español"
+								actionListener="#{beanSession.cambiaIdioma('es')}" update="@all">
+								<p:graphicImage library="images" name="es.png" width="20px"
+									height="20px" />
+							</p:commandLink>
+							<p:commandLink styleClass="dropdown-item" title="English"
+								actionListener="#{beanSession.cambiaIdioma('en')}" update="@all">
+								<p:graphicImage library="images" name="en.png" width="20px"
+									height="20px" />
+							</p:commandLink>
+						</div></li>
+				</ul>
+			</div>
+			</nav>
+		</h:form>
+	</f:view>
+</ui:composition>
+</html>

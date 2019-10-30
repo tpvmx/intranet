@@ -1,0 +1,127 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui"
+	template="/template/layoutintranet.xhtml"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+	<ui:define name="content">
+		<section class="feature">
+			<div class="container-fluid">
+				<h:form>
+					<c:if test="#{beanSession.localeActual.language eq 'es'}">
+						<h:graphicImage
+							value="resources/imagenes/cabeceras/cab_papeleria_es.png"
+							width="100%" />
+					</c:if>
+					<c:if test="#{beanSession.localeActual.language eq 'en'}">
+						<h:graphicImage
+							value="resources/imagenes/cabeceras/cab_papeleria_en.png"
+							width="100%" />
+					</c:if>
+					<div class="container">
+						<b:well>
+							<br />
+							<p:ajaxStatus onstart="PF('statusDialog').show()"
+								oncomplete="PF('statusDialog').hide()" />
+							<p:messages id="messages" showDetail="true" closable="true" />
+							<br />
+							<b:panelGrid col-spans="3,3,3,3">
+								<b:inputText placeholder="#{texto.vacacionNumEmpleado}"
+									styleClass="text-center" disabled="true"
+									value="#{beanSession.permisoActual.empleado.num_empleado}"
+									label="#{texto.vacacionNumEmpleado}" />
+								<b:inputText placeholder="#{texto.vacacionDepartamento}"
+									styleClass="text-center" disabled="true"
+									value="#{beanSession.permisoActual.empleado.departamento}"
+									label="#{texto.vacacionDepartamento}" />
+								<b:panelGrid colSpans="12">
+									<p:outputLabel styleClass="control-label" value="#{texto.papeFecha}:" />
+									<p:calendar id="to"
+										locale="#{beanSession.localeActual.language}"
+										value="#{beanPapeleria.fecha}" pattern="dd/MM/yyyy"
+										showOn="button" />
+								</b:panelGrid>
+
+							</b:panelGrid>
+							<br></br>
+							<table class="table-striped text-center">
+								<tr class=" navbar-default .navbar-nav>li>a">
+									<th><p:outputLabel value="#{texto.sku}:" /></th>
+									<th><p:outputLabel value="#{texto.cantidad}:" /></th>
+									<th><p:outputLabel value="#{texto.material}:" /></th>
+									<th><p:outputLabel value="#{texto.tamano}:" /></th>
+								</tr>
+								<tr class="align-center">
+									<td><b:inputText id="sku" placeholder="#{texto.datoalfa}"
+											value="#{beanPapeleria.sku}" /></td>
+									<td><b:inputText id="cantidad"
+											placeholder="#{texto.datonum}"
+											value="#{beanPapeleria.cantidad}" /></td>
+									<td><b:inputText id="material"
+											placeholder="#{texto.datoalfa}"
+											value="#{beanPapeleria.material}" /></td>
+									<td><b:inputText id="tamaño"
+											placeholder="#{texto.datoalfa}"
+											value="#{beanPapeleria.tamano}" /></td>
+								</tr>
+							</table>
+							<br />
+							<b:panelGrid colSpans="3,3,3,3">
+								<p:outputLabel />
+								<p:outputLabel />
+								<p:commandButton icon="fa fa-refresh" value="#{texto.nuevo}"
+									actionListener="#{beanPapeleria.limpiaCampos()}"
+									styleClass="btn-md btnCustomeGrey" update="@form"/>
+								<p:commandButton icon="fa fa-save" value="#{texto.guardar}"
+									actionListener="#{beanPapeleria.guardaPapeleria}"
+									styleClass="btn-md btnCustome" update="@form"/>
+							</b:panelGrid>
+						</b:well>
+						<br></br>
+						<div class="lineaCustomeCenter">
+							<h3>#{texto.papePendientes}</h3>
+						</div>
+						<p:dataTable var="pape" value="#{beanPapeleria.listPape}">
+							<p:column headerText="fecha" width="10%">
+								<h:outputText value="#{pape.feccrea}" converter="convertDate" />
+							</p:column>
+							<p:column headerText="#{texto.sku}" width="10%">
+								<h:outputText value="#{pape.sku}" />
+							</p:column>
+							<p:column headerText="#{texto.cantidad}" width="10%">
+								<h:outputText value="#{pape.cantidad}" />
+							</p:column>
+							<p:column headerText="#{texto.material}" width="10%">
+								<h:outputText value="#{pape.material}" />
+							</p:column>
+							<p:column headerText="#{texto.tamano}" width="10%">
+								<h:outputText value="#{pape.tamano}" />
+							</p:column>
+							<p:column styleClass="text-center" width="5%">
+								<f:facet name="header">
+									<h:outputText value="#{texto.eliminar}" />
+								</f:facet>
+								<!-- es para direccionar a una vista -->
+								<p:commandButton icon="fa fa-trash"
+									styleClass="btn-md btn-danger"
+									actionListener="#{beanPapeleria.eliminaPapeleria(pape)}"
+									update="@form">
+									<p:confirm header="#{texto.noticiaResumenConfirma}"
+										message="#{texto.papeleriaSeguro}" icon="ui-icon-alert" />
+								</p:commandButton>
+								<p:confirmDialog global="true" showEffect="fade"
+									hideEffect="fade">
+									<p:commandButton value="#{texto.noticiaResumenSi}"
+										styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+									<p:commandButton value="No" type="button"
+										styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+								</p:confirmDialog>
+							</p:column>
+						</p:dataTable>
+					</div>
+				</h:form>
+			</div>
+		</section>
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="gastoviaje" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="6888f890-d124-4090-86f8-8e98b2337041">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="8"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="62" splitType="Stretch">
+			<staticText>
+				<reportElement x="84" y="12" width="377" height="20" uuid="fbceb59d-6927-493f-96c0-923559c508fd"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TOP VICTORY ELECTRONICS DE MÉXICO, S.A. DE C.V.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="84" y="32" width="377" height="20" uuid="c74bedbc-96d6-4311-9a15-0b9c382d3414"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SOLICITUD DE GASTOS DE VIAJE]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="5" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="146" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="555" height="20" backcolor="#000033" uuid="608539bb-8f7f-412b-869d-8b6ac2e59c27"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="156" y="0" width="216" height="20" forecolor="#FFFFFF" uuid="67fed9e9-52eb-414a-924c-1dc0a16bffc2"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Informacion del Empleado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="30" width="100" height="16" uuid="5684c570-aebf-42c6-a63e-6e345b207d95"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nombre:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="46" width="100" height="20" uuid="716946e0-55a5-406b-b6f5-53ddc7e39ae1"/>
+				<text><![CDATA[Puesto:]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

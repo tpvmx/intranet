@@ -1,0 +1,25 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui"
+	template="/template/layoutintranet.xhtml">
+	<ui:define name="content">
+		<section class="section-padding">
+			<div class="container-fluid">
+				<h:form id="forms">
+					<br />
+					<b:well>
+						<div class="lineaCustomeCenter">
+							<h3>Gastos Caja Chica</h3>
+						</div>
+						<iframe id="iframe"
+							src="resources/pdfs/POLITICAGASTOSCAJACHICA.pdf" width="100%"
+							height="820"></iframe>
+					</b:well>
+				</h:form>
+			</div>
+			<br></br>
+		</section>
+	</ui:define>
+</ui:composition>

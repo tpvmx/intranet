@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui">
+<f:view contentType="text/html" locale="#{beanSession.localeActual}">
+	<h:head>
+		<f:loadBundle basename="com.locate.aoc.message" var="texto" />
+		<meta http-equiv='Content-Type'
+			content='text/html; charset=iso-8859-1' />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>Intranet AOC</title>
+		<meta name="description" content="intranet aoc mexico" />
+		<meta name="keywords" content="intranet aoc mexico" />
+		<link rel="stylesheet"
+			href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+			integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+			crossorigin="anonymous" />
+		<link
+			href="https://getbootstrap.com/docs/3.3/examples/starter-template/starter-template.css"
+			rel="stylesheet" />
+		<h:outputStylesheet name="/style/style.css" />
+	</h:head>
+	<style>
+body {
+	font-family: 'Avenir';
+}
+</style>
+	<h:body styleClass="contenedorNew">
+		<p:dialog widgetVar="statusDialog" modal="true" draggable="false"
+			style="z-index: 10001 !important" closable="false" resizable="false"
+			showHeader="false">
+			<p:graphicImage library="imagenes" name="intranet.gif" />
+		</p:dialog>
+		<ui:insert name="content">
+		</ui:insert>
+		<h:outputScript name="/js/jquery.easing.min.js" />
+		<script
+			src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+			integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+			crossorigin="anonymous"></script>
+		<script
+			src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+			integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+			crossorigin="anonymous"></script>
+	</h:body>
+</f:view>
+</html>

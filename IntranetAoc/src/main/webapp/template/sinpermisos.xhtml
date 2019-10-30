@@ -1,0 +1,36 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui"
+	template="/template/layoutintranetsinmenu.xhtml">
+	<ui:define name="content">
+		<section class="feature">
+			<div class="container-fluid">
+				<h:form>
+					<hr />
+					<div class="lineaCustome">
+						<h2>#{texto.sinPermisos}</h2>
+					</div>
+					<b:panelGrid colSpans="5,7">
+						<p:graphicImage library="images" name="logo-blue.png"
+							style="position: relative; width: 100%; height: 90%;" />
+						<b:well>
+							<h:outputText
+								value="Su estación de trabajo no cuenta con los permisos de acceso a la Intranet de AOC"
+								style="color:#003595;font-size:16px" />
+							<ul type="disc" style="font-size: 14px; font-weight: bold">
+								<li>Solicitar apoyo a sistemas <a
+									href="mailto:sistemas.aoc@tpvmexico.onmicrosoft.com"
+									style="color: #FF00CC">aquí.</a></li>
+								<li>Es necesario obtener la direccion Mac de su equipo para
+									ser dado de alta.</li>
+							</ul>
+						</b:well>
+					</b:panelGrid>
+					<hr />
+				</h:form>
+			</div>
+		</section>
+	</ui:define>
+</ui:composition>

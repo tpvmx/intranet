@@ -1,0 +1,49 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:ui="http://java.sun.com/jsf/facelets" 
+      xmlns:h="http://java.sun.com/jsf/html" 
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:b="http://bootsfaces.net/ui">
+
+    <h:head>
+        <link rel="shortcut icon" href="../../imgs/favicon.ico" />
+        <title>Seguridad</title>
+        <style>
+            .dropdown-header {display: block;padding: 3px 20px;font-size: 12px;line-height: 1.428571429;color: #999999;white-space: nowrap;}
+        </style>
+    </h:head>
+    <h:body style="padding-bottom: 85px;">
+        <b:container>
+            <h:form>
+                <b:growl id="growl404Mensaje"/>
+                <b:panelGrid colSpans="6,6">
+                    <b:well>
+                        <h:outputText value="Parece que el recurso no se encuentra aqu&#237;, utiliza alguna de las siguientes sugerencias: " 
+                                      style="color:#003595;font-size:16px" />
+                        <b:well>
+                            <ul type="disc" style="font-size: 14px;font-weight:bold">
+                                <li>Para ir al inicio del sistema da clic <a href="/login" style="color: #FF00CC">aqu&#237;</a>.</li>
+                                <li>Verifica la ruta de tu p&#225;gina, tal vez no este bien escrita.</li>
+                                <li>Si no funcion&#243; ninguna de las anteriores, habla a mesa de ayuda en la extensi&#243;n 6655 o env&#237;a un correo llenando los siguientes datos:</li>
+                            </ul>
+                        </b:well>
+                        <b:panelGrid colSpans="12">
+                            <b:inputText id="inputText404Usuario" value="#{beanAcceso.asunto}"
+                                         label="Asunto" renderLabel="true"
+                                         required="true" requiredMessage="Asunto requerido."/>
+                            <p:outputLabel for="editor404DescripcionLogin" value="Descripci&#243;n" />
+                            <p:editor id="editor404DescripcionLogin" widgetVar="editorWidget" 
+                                      value="#{beanAcceso.mensajeMail}" height="150"
+                                      controls="bold italic underline strikethrough undo redo cut copy paste" 
+                                      required="true" requiredMessage="Descripci&#243;n requerida."/>
+                            <p:outputLabel value="" />
+                            <b:commandButton value="Enviar" action="#{beanAcceso.enviarMensajeError}" 
+                                             look="primary" update="growl404Mensaje"/>
+                        </b:panelGrid>
+                    </b:well>
+                    <b:image value="/imgs/error2.png" style="position: relative; width: 100%; height: 100%;" />
+                </b:panelGrid>
+            </h:form>
+        </b:container>
+    </h:body>
+</html>

@@ -1,0 +1,172 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	template="/template/layoutintranet.xhtml">
+	<f:metadata>
+		<f:viewParam name="mac" value="#{beanSession.mac}" />
+		<f:viewAction action="#{beanSession.validaMac}" />
+	</f:metadata>
+	<ui:define name="content">
+		<div class="container-fluid">
+			<br />
+			<h5 align="right" style="font-size: 15px;">#{beanInicio.tipoCambios}</h5>
+			<MARQUEE bgcolor="#00527F" direction="left" style="color: white">#{beanInicio.proximosCumples}</MARQUEE>
+			<h:form>
+				<p:growl id="growl" showDetail="true" sticky="true" />
+				<br />
+				<div id="gtco-portfolio" class="gtco-section">
+					<div class="gtco-container">
+						<div class="row row-pb-md">
+							<div class="col-md-9">
+								<div class="grid-container">
+									<c:forEach items="#{beanInicio.listNoticiasInicio}" var="nt"
+										varStatus="status">
+										<div
+											class="boxGrid #{beanInicio.obtenDimencionPrimero(status.index)}"
+											style="#{beanInicio.pintaImage(nt)}">
+											<h:outputLink value="articulo">
+												<h:outputText />
+												<f:param name="idNoticias" value="#{nt.idNoticias}" />
+												<div
+													class="t#{beanInicio.obtenDimencionPrimero(status.index)}"
+													style="#{beanInicio.dameColorTitulo(nt)}">
+													<c:if test="#{beanSession.localeActual.language eq 'es'}">
+														#{nt.titulo}
+													</c:if>
+													<c:if test="#{beanSession.localeActual.language eq 'en'}">
+														#{nt.title}
+													</c:if>
+												</div>
+											</h:outputLink>
+										</div>
+									</c:forEach>
+								</div>
+							</div>
+							<div class="col-md-3">
+								<div class="bannerDer">
+									<div class="lineaCustome">
+										<h3>#{texto.btnDelOtroLado}</h3>
+									</div>
+									<c:forEach items="#{beanInicio.listNoticiasBanner}" var="nt"
+										varStatus="status">
+										<div class="padding10">
+											<div class="heading pull-right">
+												<c:if test="#{beanSession.localeActual.language eq 'es'}">
+													<h4 class="noticiaInteresTitulo">#{nt.titulo}</h4>
+													<h6 class="noticiaInteresSubTitulo">
+														#{nt.subtitulo}
+														<h:outputLink value="articulo"
+															styleClass="noticiaInteresLeer">
+															<h:outputText value="#{texto.btnLeerMas}" />
+															<f:param name="idNoticias" value="#{nt.idNoticias}" />
+														</h:outputLink>
+													</h6>
+													<br />
+													<br />
+												</c:if>
+												<c:if test="#{beanSession.localeActual.language eq 'en'}">
+													<h4 class="noticiaInteresTitulo">#{nt.title}</h4>
+													<h6 class="noticiaInteresSubTitulo">
+														#{nt.subtitle}
+														<h:outputLink value="articulo"
+															styleClass="noticiaInteresLeer">
+															<h:outputText value="#{texto.btnLeerMas}" />
+															<f:param name="idNoticias" value="#{nt.idNoticias}" />
+														</h:outputLink>
+													</h6>
+													<br />
+													<br />
+												</c:if>
+											</div>
+											<div class="fea-img pull-left">
+												<p:graphicImage library="imagenes"
+													name="delotro#{status.index + 1}.png" />
+											</div>
+										</div>
+										<br />
+									</c:forEach>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="lineaCustomeCenter">
+					<h3>#{texto.inicioMasSobre}</h3>
+				</div>
+				<section>
+					<div class="row">
+						<div class="col-lg-4 col-sm-6 portfolio-item">
+							<div class="h-100">
+								<a href="#{request.contextPath}/productos"> <c:if
+										test="#{beanSession.localeActual.language eq 'es'}">
+										<img class="card-img-top"
+											src="resources/imagenes/lanzamientoproductos_es.png" />
+									</c:if> <c:if test="#{beanSession.localeActual.language eq 'en'}">
+										<img class="card-img-top"
+											src="resources/imagenes/lanzamientoproductos_en.png" />
+									</c:if>
+								</a>
+							</div>
+						</div>
+						<div class="col-lg-4 col-sm-6 portfolio-item">
+							<div class="h-100">
+								<a href="#{request.contextPath}/politicas"><c:if
+										test="#{beanSession.localeActual.language eq 'es'}">
+										<img class="card-img-top"
+											src="resources/imagenes/politicasinternas_es.png" />
+									</c:if> <c:if test="#{beanSession.localeActual.language eq 'en'}">
+										<img class="card-img-top"
+											src="resources/imagenes/politicasinternas_en.png" />
+									</c:if> </a>
+							</div>
+						</div>
+						<div class="col-lg-4 col-sm-6 portfolio-item">
+							<div class="h-100">
+								<a href="#{request.contextPath}/proteccion"> <c:if
+										test="#{beanSession.localeActual.language eq 'es'}">
+										<img class="card-img-top"
+											src="resources/imagenes/proteccioncivil_es.png" />
+									</c:if> <c:if test="#{beanSession.localeActual.language eq 'en'}">
+										<img class="card-img-top"
+											src="resources/imagenes/proteccioncivil_en.png" />
+									</c:if>
+								</a>
+							</div>
+						</div>
+					</div>
+				</section>
+				<!-- Section Prueba -->
+				<p:dialog widgetVar="dlgCumple" modal="true"
+					header="#{beanSession.permisoActual.empleado.nombreCompletoUpperCase}"
+					showEffect="explode" responsive="true" width="80%" height="70%"
+					hideEffect="explode">
+					<b:panelGrid colSpans="6,6">
+						<b:panelGrid colSpans="12">
+							<p:graphicImage library="images" name="happy-birthday.jpg"
+								width="100%" />
+						</b:panelGrid>
+						<b:panelGrid colSpans="12" styleClass="text-center">
+							<p:graphicImage library="images" name="logo-blue.png" width="40%"
+								height="40%" />
+							<div class="lineaCustomeBebasB" align="center">
+								<h3>TE DESEA</h3>
+							</div>
+							<div class="lineaCustomeBebasBook" align="center">
+								<h3>!!FELIZ CUMPLEAÑOS!!</h3>
+							</div>
+							<FONT FACE="Impact" size="17"> <MARQUEE
+									behavior="alternate">
+									#{beanSession.permisoActual.empleado.nombreCompletoUpperCase} <br />
+									Felices #{beanInicio.aniosCumple} años.
+								</MARQUEE>
+							</FONT>
+						</b:panelGrid>
+					</b:panelGrid>
+				</p:dialog>
+			</h:form>
+		</div>
+	</ui:define>
+</ui:composition>

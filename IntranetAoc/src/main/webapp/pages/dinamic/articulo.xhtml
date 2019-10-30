@@ -1,0 +1,100 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui"
+	template="/template/layoutintranet.xhtml"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+	<f:metadata>
+		<f:viewParam name="idNoticias" value="#{beanArticulo.idNoticiaParam}" />
+		<f:viewAction action="#{beanArticulo.buscaNoticiaParam}" />
+	</f:metadata>
+	<ui:define name="content">
+		<h:form>
+			<section class="section-padding">
+				<div class="container-fluid">
+					<div class="col-md-12 col-sm-12 air slideanim" align="center">
+						<div class="col-md-1" align="center"></div>
+						<div class="col-md-10" align="center">
+							<div class="lineaCustomeBebasBook">
+								<c:if test="#{beanSession.localeActual.language eq 'es'}">
+									<h3>#{beanArticulo.noticiaActual.titulo}</h3>
+								</c:if>
+								<c:if test="#{beanSession.localeActual.language eq 'en'}">
+									<h3>#{beanArticulo.noticiaActual.title}</h3>
+								</c:if>
+								<hr />
+							</div>
+							<div class="area-new" style="text-align: justify; color: black;">
+								<b:panelGrid colSpans="8,4">
+									<b:well>
+										<h1 align="left" style="color: #00537B;">#{texto.artiTitulo}</h1>
+										<h6 align="left">#{texto.artiFecha}
+											#{beanArticulo.fechaLetra()}</h6>
+										<p>
+											<c:if test="#{beanSession.localeActual.language eq 'es'}">
+												<h3 align="center">#{beanArticulo.noticiaActual.subtitulo}</h3>
+											</c:if>
+											<c:if test="#{beanSession.localeActual.language eq 'en'}">
+												<h3 align="center">#{beanArticulo.noticiaActual.subtitle}</h3>
+											</c:if>
+										<hr />
+										<h:outputText value="#{beanArticulo.obtenTextoNota()}"
+											escape="false" />
+										</p>
+									</b:well>
+									<b:well>
+										<div class="bannerDer">
+											<div class="lineaCustome">
+												<h3>#{texto.btnDelOtroLado}</h3>
+											</div>
+											<c:forEach items="#{beanInicio.listNoticiasBanner}" var="nt"
+												varStatus="status">
+												<div class="padding10">
+													<div class="heading pull-right">
+														<c:if test="#{beanSession.localeActual.language eq 'es'}">
+															<h4 class="noticiaInteresTitulo">#{nt.titulo}</h4>
+															<h6 class="noticiaInteresSubTitulo">
+																#{nt.subtitulo}
+																<h:outputLink value="articulo"
+																	styleClass="noticiaInteresLeer">
+																	<h:outputText value="#{texto.btnLeerMas}" />
+																	<f:param name="idNoticias" value="#{nt.idNoticias}" />
+																</h:outputLink>
+															</h6>
+															<br />
+															<br />
+														</c:if>
+														<c:if test="#{beanSession.localeActual.language eq 'en'}">
+															<h4 class="noticiaInteresTitulo">#{nt.title}</h4>
+															<h6 class="noticiaInteresSubTitulo">
+																#{nt.subtitle}
+																<h:outputLink value="articulo"
+																	styleClass="noticiaInteresLeer">
+																	<h:outputText value="#{texto.btnLeerMas}" />
+																	<f:param name="idNoticias" value="#{nt.idNoticias}" />
+																</h:outputLink>
+															</h6>
+															<br />
+															<br />
+														</c:if>
+													</div>
+													<div class="fea-img pull-left">
+														<p:graphicImage library="imagenes"
+															name="delotro#{status.index + 1}.png" />
+													</div>
+												</div>
+												<br />
+											</c:forEach>
+										</div>
+									</b:well>
+								</b:panelGrid>
+							</div>
+						</div>
+						<div class="col-md-1" align="center"></div>
+					</div>
+				</div>
+			</section>
+		</h:form>
+	</ui:define>
+</ui:composition>

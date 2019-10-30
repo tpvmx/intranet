@@ -1,0 +1,113 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui"
+	template="/template/layoutintranet.xhtml"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+	<ui:define name="content">
+		<section class="section-padding">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-md-6 col-sm-6 air slideanim">
+						<div class="area-image">
+							<c:if test="#{beanSession.localeActual.language eq 'es'}">
+								<h:graphicImage library="imagenes" name="mision_es.png"
+									styleClass="img-responsive" width="100%" />
+							</c:if>
+							<c:if test="#{beanSession.localeActual.language eq 'en'}">
+								<h:graphicImage library="imagenes" name="mision_en.png"
+									styleClass="img-responsive" width="100%" />
+							</c:if>
+						</div>
+						<div class="area-info">
+							<p>
+								- #{texto.histoMisionT1} <br />- #{texto.histoMisionT2} <br />
+								- #{texto.histoMisionT3}<br />- #{texto.histoMisionT4}
+							</p>
+						</div>
+					</div>
+					<div class="col-md-6 col-sm-6 air slideanim">
+						<div class="area-image">
+							<h:graphicImage library="imagenes" name="vision_es.png"
+								styleClass="img-responsive" width="100%" />
+						</div>
+						<div class="area-info">
+							<p>
+								#{texto.histoVisionTexto1} <br /> #{texto.histoVisionTexto2} <br />
+								#{texto.histoVisionTexto3} <br />
+							</p>
+						</div>
+					</div>
+				</div>
+				<br /> <br />
+				<div class="lineaCustomeCenter">
+					<h3>#{texto.histoValoresTitulo}</h3>
+				</div>
+				<br /> <br />
+				<div class="row">
+					<div class="col-lg-12" align="center">
+						<b:panelGrid colSpans="1,2,2,2,2,2,1">
+							<p:outputLabel />
+							<c:if test="#{beanSession.localeActual.language eq 'es'}">
+								<p:graphicImage library="imagenes" name="compartir_es.png" />
+								<p:graphicImage library="imagenes" name="administracion_es.png" />
+								<p:graphicImage library="imagenes" name="dedicacion_es.png" />
+								<p:graphicImage library="imagenes" name="inovacion_es.png" />
+								<p:graphicImage library="imagenes" name="responsabilidad_es.png" />
+							</c:if>
+							<c:if test="#{beanSession.localeActual.language eq 'en'}">
+								<p:graphicImage library="imagenes" name="compartir_en.png" />
+								<p:graphicImage library="imagenes" name="administracion_en.png" />
+								<p:graphicImage library="imagenes" name="dedicacion_en.png" />
+								<p:graphicImage library="imagenes" name="inovacion_en.png" />
+								<p:graphicImage library="imagenes" name="responsabilidad_en.png" />
+							</c:if>
+							<p:outputLabel />
+						</b:panelGrid>
+						<br /> <br />
+						<b:panelGrid colSpans="4,2,2,4">
+							<p:outputLabel />
+							<c:if test="#{beanSession.localeActual.language eq 'es'}">
+								<p:graphicImage library="imagenes" name="enfoque_es.png" />
+								<p:graphicImage library="imagenes" name="excelencia_es.png" />
+							</c:if>
+							<c:if test="#{beanSession.localeActual.language eq 'en'}">
+								<p:graphicImage library="imagenes" name="enfoque_en.png" />
+								<p:graphicImage library="imagenes" name="excelencia_en.png" />
+							</c:if>
+							<p:outputLabel />
+						</b:panelGrid>
+					</div>
+				</div>
+				<br /> <br />
+				<div class="lineaCustomeCenter">
+					<h3>#{texto.histoIdealTitulo}</h3>
+				</div>
+				<br /> <br />
+				<div class="row">
+					<div class="col-lg-12">
+						<b:panelGrid colSpans="2,2,2,2,2,2">
+							<c:if test="#{beanSession.localeActual.language eq 'es'}">
+								<p:graphicImage library="imagenes" name="avanza_es.png" />
+								<p:graphicImage library="imagenes" name="productividad_es.png" />
+								<p:graphicImage library="imagenes" name="destacar_es.png" />
+								<p:graphicImage library="imagenes" name="vision_ide_es.png" />
+								<p:graphicImage library="imagenes" name="tecnologia_es.png" />
+								<p:graphicImage library="imagenes" name="construir_es.png" />
+							</c:if>
+							<c:if test="#{beanSession.localeActual.language eq 'en'}">
+								<p:graphicImage library="imagenes" name="avanza_en.png" />
+								<p:graphicImage library="imagenes" name="productividad_en.png" />
+								<p:graphicImage library="imagenes" name="destacar_en.png" />
+								<p:graphicImage library="imagenes" name="vision_ide_es.png" />
+								<p:graphicImage library="imagenes" name="tecnologia_en.png" />
+								<p:graphicImage library="imagenes" name="construir_en.png" />
+							</c:if>
+						</b:panelGrid>
+					</div>
+				</div>
+			</div>
+		</section>
+	</ui:define>
+</ui:composition>

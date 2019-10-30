@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1"
+	xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+	<!-- WAR SOPORTE -->
+	<persistence-unit name="intranetjpa" transaction-type="RESOURCE_LOCAL">
+		<non-jta-data-source>jdbc/pool/intranet</non-jta-data-source>
+		<class>com.land.back.entities.ConstantesDB</class>
+		<class>com.land.back.entities.Noticias</class>
+		<class>com.land.back.entities.NoticiasImagenes</class>
+		<class>com.land.back.entities.TipoUsuario</class>
+		<class>com.land.back.entities.TokenAoc</class>
+		<class>com.land.back.entities.Usuario</class>
+		<class>com.land.back.entities.Papeleria</class>
+		<class>com.land.back.entities.TipoEvento</class>
+		<class>com.land.back.entities.Evento</class>
+		<class>com.land.back.entities.TipoNoticia</class>
+		<class>com.land.back.entities.Empleado</class>
+		<class>com.land.back.entities.Vacacion</class>
+		<class>com.land.back.entities.GastoViaje</class>
+		<class>com.land.back.entities.GastoDetalle</class>
+		<class>com.land.back.entities.Permiso</class>
+		<class>com.land.back.entities.Folio</class>
+
+		<class>com.land.back.entities.Juntas</class>
+		<shared-cache-mode>DISABLE_SELECTIVE</shared-cache-mode>
+		<properties>
+			<property name="hibernate.show_sql" value="true" />
+		</properties>
+	</persistence-unit>
+</persistence>

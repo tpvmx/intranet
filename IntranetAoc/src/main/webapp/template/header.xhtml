@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:b="http://bootsfaces.net/ui">
+<ui:composition>
+	<!-- START HEADER-->
+	<f:view contentType="text/html" locale="#{beanSession.localeActual}">
+		<h:form>
+			<f:loadBundle basename="com.locate.aoc.message" var="texto" />
+			<!--Navigation bar-->
+			<nav class="navbar navbar-default navbar-fixed-top">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle" data-toggle="collapse"
+						data-target="#myNavbar">
+						<span class="icon-bar"></span> <span class="icon-bar"></span> <span
+							class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="#{request.contextPath}/inicio"><h:graphicImage
+							library="images" name="logo_principal.png"
+							styleClass="img-responsive" width="200px" /></a>
+				</div>
+				<div class="collapse navbar-collapse" id="myNavbar">
+					<ul class="nav navbar-nav navbar-right text-center">
+						<li><a>#{texto.bienvenido}:
+								#{beanSession.permisoActual.empleado}</a></li>
+						<li class="btn-trial"><a>#{texto.headerPerfil}</a>
+							<ul class="nav navbar-nav navbar-default">
+								<li><a href="#{request.contextPath}/historia">#{texto.headerHistoria}</a></li>
+								<li><a href="#{request.contextPath}/organigrama">#{texto.headerOrganigrama}</a></li>
+							</ul></li>
+						<li class="btn-trial"><a
+							href="#{request.contextPath}/calendario">#{texto.headerCalendario}</a></li>
+						<li class="btn-trial"><a>#{texto.headerForm}</a>
+							<ul class="nav navbar-nav navbar-default">
+								<li><a href="#{request.contextPath}/papeleria">#{texto.headerPapeleria}</a></li>
+								<li><a href="#{request.contextPath}/juntas">#{texto.headerJuntas}</a></li>
+								<li><a href="#{request.contextPath}/vacacion">#{texto.headerVacaciones}</a></li>
+								<li><a href="#{request.contextPath}/Gasto">#{texto.headerViaticos}</a></li>
+							</ul></li>
+						<c:if test="#{beanSession.permisoActual.admin == 1}">
+							<li class="btn-trial"><a>#{texto.headerAdmin}</a>
+								<ul class="nav navbar-nav navbar-default">
+									<li><a href="#{request.contextPath}/noticiaResumen">#{texto.headerNoticiaActiva}</a></li>
+									<li><a href="#{request.contextPath}/consultaformulario">#{texto.headerConsulta}</a></li>
+									<!--li><a href="#{request.contextPath}/pages/pdf.xhtml">#{texto.cargapdf}</a></li-->
+								</ul></li>
+						</c:if>
+						<li class="btn-trial"><a class="fa fa-globe"></a>
+							<ul class="nav navbar-nav navbar-default">
+								<li><p:commandLink title="Español"
+										action="#{beanSession.cambiaIdioma('es')}" update="@all">
+										<p:graphicImage library="images" name="es.png" width="20px"
+											height="20px" />
+									</p:commandLink>
+									<hr></hr></li>
+								<li><p:commandLink title="English"
+										action="#{beanSession.cambiaIdioma('en')}" update="@all">
+										<p:graphicImage library="images" name="en.png" width="20px"
+											height="20px" />
+									</p:commandLink></li>
+							</ul></li>
+					</ul>
+				</div>
+
+			</div>
+			</nav>
+		</h:form>
+	</f:view>
+</ui:composition>
+</html>

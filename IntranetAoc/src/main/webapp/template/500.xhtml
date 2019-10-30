@@ -1,0 +1,53 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui">
+
+<h:head>
+	<link rel="shortcut icon" href="../imgs/favicon.ico" />
+	<title>Seguridad</title>
+</h:head>
+<h:body style="padding-bottom: 85px;">
+	<b:container>
+		<h:form>
+			<b:growl id="growl500Mensaje" />
+			<b:panelGrid colSpans="6,6">
+				<b:image value="/imgs/camiones2.png"
+					style="position: relative; width: 100%; height: 100%;" />
+				<b:well>
+					<h:outputText
+						value="Es posible que haya ocurrido un problema técnico, utiliza alguna de las siguientes sugerencias:"
+						style="color:#003595;font-size:16px" />
+					<b:well>
+						<ul type="disc" style="font-size: 14px; font-weight: bold">
+							<li>Para ir al inicio del sistema da clic <a href="/login"
+								style="color: #FF00CC">aquí.</a></li>
+							<li>Verifica la ruta de tu página, tal vez no este bien
+								escrita y ejecuta una vez más tu última acción.</li>
+							<li>Si no funcionó ninguna de las anteriores, habla a Mesa
+								de ayuda en la extensión 6655 o envía un correo llenando los
+								siguientes datos:</li>
+						</ul>
+					</b:well>
+					<b:panelGrid colSpans="12">
+						<b:inputText id="inputTexterrorUsuario"
+							value="#{beanAcceso.asunto}" label="Asunto" renderLabel="true"
+							required="true" requiredMessage="Asunto requerido." />
+						<p:outputLabel for="editor500DescripcionLogin" value="Descripción" />
+						<p:editor id="editor500DescripcionLogin" widgetVar="editorWidget"
+							value="#{beanAcceso.mensajeMail}" height="150"
+							controls="bold italic underline strikethrough undo redo cut copy paste"
+							required="true" requiredMessage="Descripción requerida." />
+						<p:outputLabel value="" />
+						<b:commandButton value="Enviar"
+							action="#{beanAcceso.enviarMensajeError}" look="primary"
+							update="growl500Mensaje" />
+					</b:panelGrid>
+				</b:well>
+			</b:panelGrid>
+		</h:form>
+	</b:container>
+</h:body>
+</html>

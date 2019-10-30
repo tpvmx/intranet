@@ -1,0 +1,109 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui"
+	template="/template/layoutintranet.xhtml"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+	<ui:define name="content">
+		<section class="feature">
+			<div class="container-fluid">
+				<h:form>
+					<c:if test="#{beanSession.localeActual.language eq 'es'}">
+						<h:graphicImage
+							value="resources/imagenes/cabeceras/cab_sala_es.png" width="100%" />
+					</c:if>
+					<c:if test="#{beanSession.localeActual.language eq 'en'}">
+						<h:graphicImage
+							value="resources/imagenes/cabeceras/cab_sala_en.png" width="100%" />
+					</c:if>
+					<div class="container">
+						<b:well>
+							<br />
+							<p:ajaxStatus onstart="PF('statusDialog').show()"
+								oncomplete="PF('statusDialog').hide()" />
+							<p:messages id="messages" showDetail="true" closable="true" />
+							<br />
+							<p:outputLabel value="#{texto.descripcion}"></p:outputLabel>
+							<b:inputTextarea rows="2" value="#{beanSalaJuntas.descripcion}"
+								colMd="8" placeholder="#{texto.observacionesjunta}" />
+							<br />
+							<b:panelGrid col-spans="3,3,3,3">
+								<b:panelGrid colSpans="12">
+									<p:outputLabel styleClass="control-label"
+										value="#{texto.fechajuntaInicio}:" />
+									<p:calendar id="to"
+										locale="#{beanSession.localeActual.language}"
+										value="#{beanSalaJuntas.fechaJuntaInicio}"
+										pattern="dd/MM/yyyy HH:mm" showOn="button" />
+								</b:panelGrid>
+								<b:panelGrid colSpans="12">
+									<p:outputLabel styleClass="control-label"
+										value="#{texto.fechajuntaFin}:" />
+									<p:calendar id="end"
+										locale="#{beanSession.localeActual.language}"
+										value="#{beanSalaJuntas.fechaJuntaFin}"
+										pattern="dd/MM/yyyy HH:mm" showOn="button" />
+								</b:panelGrid>
+							</b:panelGrid>
+							<br></br>
+
+							<br />
+							<b:panelGrid colSpans="3,3,3,3">
+								<p:outputLabel />
+								<p:outputLabel />
+								<p:commandButton icon="fa fa-refresh" value="#{texto.nuevo}"
+									actionListener="#{beanSalaJuntas.limpiaCampos()}"
+									styleClass="btn-md btnCustomeGrey" update="@form" />
+								<p:commandButton icon="fa fa-save" value="#{texto.guardar}"
+									actionListener="#{beanSalaJuntas.guardaJunta()}"
+									styleClass="btn-md btnCustome" update="@form" />
+							</b:panelGrid>
+						</b:well>
+						<br></br>
+						<div class="lineaCustomeCenter">
+							<h3>#{texto.diasPendientes}</h3>
+						</div>
+						<p:dataTable var="junta" value="#{beanSalaJuntas.listJunta}"
+							id="tablaJuntas">
+							<p:column headerText="#{texto.gastoViajeFechaSoli}" width="10%">
+								<h:outputText value="#{junta.feccrea}" converter="convertDate" />
+							</p:column>
+							<p:column headerText="#{texto.descripcion}" width="10%">
+								<h:outputText value="#{junta.descripcion}" />
+							</p:column>
+							<p:column headerText="#{texto.fechajuntaInicio}" width="10%">
+								<h:outputText value="#{junta.fechaJuntaInicio}"
+									converter="convertDateTime" />
+							</p:column>
+							<p:column headerText="#{texto.fechajuntaFin}" width="10%">
+								<h:outputText value="#{junta.fechaJuntaFin}"
+									converter="convertDateTime" />
+							</p:column>
+							<p:column styleClass="text-center" width="5%">
+								<f:facet name="header">
+									<h:outputText value="#{texto.eliminar}" />
+								</f:facet>
+								<!-- es para direccionar a una vista -->
+								<p:commandButton icon="fa fa-trash"
+									styleClass="btn btn-md btn-danger"
+									actionListener="#{beanSalaJuntas.eliminaJunta(junta)}"
+									update="@form tablaJuntas">
+									<p:confirm header="#{texto.noticiaResumenConfirma}"
+										message="#{texto.salaJuntasSeguro}" icon="ui-icon-alert" />
+								</p:commandButton>
+								<p:confirmDialog global="true" showEffect="fade"
+									hideEffect="fade">
+									<p:commandButton value="#{texto.noticiaResumenSi}"
+										styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+									<p:commandButton value="No" type="button"
+										styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+								</p:confirmDialog>
+							</p:column>
+						</p:dataTable>
+					</div>
+				</h:form>
+			</div>
+		</section>
+	</ui:define>
+</ui:composition>

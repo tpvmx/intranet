@@ -1,0 +1,71 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui"
+	template="/template/index.xhtml">
+	<ui:define name="content">
+		<h:form rendered="msj">
+			<b:messages id="msg" escape="false" />
+			<h:graphicImage library="images" name="logo-blue.png" width="50%"
+				styleClass="img-responsive" />
+		</h:form>
+		<h:form>
+			<p:growl id="messages" showDetail="true" />
+
+			<b:selectOneMenu id="cboSku" label="Tipo"
+				ajax="true" update="schedule messages">
+				<f:selectItem itemValue="1" itemLabel="Tipo1" />
+				<f:selectItem itemValue="2" itemLabel="Tipo2" />
+				<f:selectItem itemValue="3" itemLabel="Tipo3" />
+				<f:selectItem itemValue="4" itemLabel="Tipo4" />
+				<f:selectItem itemValue="5" itemLabel="Todos" />
+			</b:selectOneMenu>
+
+			<h:panelGrid columnClasses="value">
+				<h3 style="margin-top: 0">Calendario AOC</h3>
+				<p:schedule id="schedule" value="#{beanCalendario.eventModel}"
+					widgetVar="myschedule" timeZone="GMT+2">
+					<p:ajax event="dateSelect"
+						listener="#{beanCalendario.onDateSelect}" update="eventDetails"
+						oncomplete="PF('eventDialog').show();" />
+					<p:ajax event="eventSelect"
+						listener="#{beanCalendario.onEventSelect}" update="eventDetails"
+						oncomplete="PF('eventDialog').show();" />
+					<p:ajax event="eventMove" listener="#{beanCalendario.onEventMove}"
+						update="messages" />
+					<p:ajax event="eventResize"
+						listener="#{beanCalendario.onEventResize}" update="messages" />
+
+				</p:schedule>
+			</h:panelGrid>
+
+			<p:dialog widgetVar="eventDialog" header="Event Details"
+				showEffect="clip" hideEffect="clip">
+				<h:panelGrid id="eventDetails" columns="2">
+					<p:outputLabel for="title" value="Titles:" />
+					<p:inputText id="title" value="#{beanCalendario.event.title}"
+						required="true" />
+
+					<p:outputLabel for="from" value="From:" />
+					<p:calendar id="from" value="#{beanCalendario.event.startDate}"
+						pattern="dd/MM/yyyy HH:mm" />
+
+					<p:outputLabel for="to" value="To:" />
+					<p:calendar id="to" value="#{beanCalendario.event.endDate}"
+						pattern="dd/MM/yyyy HH:mm" />
+
+					<p:outputLabel for="allDay" value="All Day:" />
+					<h:selectBooleanCheckbox id="allDay"
+						value="#{beanCalendario.event.allDay}" />
+
+					<p:commandButton type="reset" value="Reset" />
+					<p:commandButton id="addButton" value="Save"
+						actionListener="#{beanCalendario.addEvent}"
+						oncomplete="PF('myschedule').update();PF('eventDialog').hide();" />
+				</h:panelGrid>
+			</p:dialog>
+		</h:form>
+
+	</ui:define>
+</ui:composition>

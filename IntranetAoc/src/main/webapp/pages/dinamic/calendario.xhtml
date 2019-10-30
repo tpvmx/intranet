@@ -1,0 +1,165 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui"
+	template="../../template/layoutintranet.xhtml"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+	<ui:define name="content">
+		<section class="feature">
+			<div class="container-fluid">
+				<h:form>
+					<c:if test="#{beanSession.localeActual.language eq 'es'}">
+						<h:graphicImage
+							value="resources/imagenes/cabeceras/cab_calendario_es.png"
+							width="100%" />
+					</c:if>
+					<c:if test="#{beanSession.localeActual.language eq 'en'}">
+						<h:graphicImage
+							value="resources/imagenes/cabeceras/cab_calendario_en.png"
+							width="100%" />
+					</c:if>
+					<p:ajaxStatus onstart="PF('statusDialog').show()"
+						oncomplete="PF('statusDialog').hide()" />
+					<b:messages id="msg" escape="false" />
+					<div class="container">
+						<b:well>
+							<b:panelGrid colSpans="3,3,3,3">
+								<c:forEach items="#{beanCalendario.listTiposEventos1}"
+									var="tipos">
+									<p:selectBooleanCheckbox id="tiposEventos"
+										styleClass="chkCalendario" value="#{tipos.seleccion}"
+										itemLabel="#{tipos.descripcion}">
+									</p:selectBooleanCheckbox>
+								</c:forEach>
+							</b:panelGrid>
+							<br />
+							<b:panelGrid colSpans="10,2">
+								<p:outputLabel />
+								<b:commandButton value="#{texto.calenFiltrar}"
+									icon-awesome="fa-filter" styleClass="btn-md btnCustome"
+									actionListener="#{beanCalendario.filtraEventos}" />
+							</b:panelGrid>
+							<br />
+							<br />
+						</b:well>
+						<p:schedule id="schedule" value="#{beanCalendario.eventModel}"
+							styleClass="fontbebas"
+							locale="#{beanSession.localeActual.language}"
+							widgetVar="myschedule" timeZone="GMT+2">
+							<c:if test="#{beanSession.permisoActual.admin == 1}">
+								<p:ajax event="dateSelect"
+									listener="#{beanCalendario.onDateSelect}"
+									update="eventDetails @form"
+									oncomplete="PF('eventDialog').show();" />
+								<p:ajax event="eventSelect"
+									listener="#{beanCalendario.onEventSelect}"
+									update="eventDetails @form"
+									oncomplete="PF('eventDialog').show();" />
+							</c:if>
+						</p:schedule>
+					</div>
+					<p:dialog widgetVar="eventDialog"
+						header="#{beanCalendario.mensajeEvento}" showEffect="clip"
+						hideEffect="clip">
+						<b:well>
+							<div class="lineaCustomeCenter">
+								<h3>AOC</h3>
+							</div>
+							<b:panelGrid id="eventDetails" colSpans="12">
+								<p:outputLabel for="title" value="#{texto.calenTitulo}" />
+								<p:inputText id="title"
+									value="#{beanCalendario.myEvento.descripcion}" />
+								<p:outputLabel for="from" value="#{texto.calenFechaIni}" />
+								<p:calendar id="from"
+									value="#{beanCalendario.myEvento.fecha_inicio}" showOn="button"
+									timeZone="GMT+2" pattern="dd/MM/yyyy HH:mm" />
+								<p:outputLabel for="to" value="#{texto.calenFechaTerm}" />
+								<p:calendar id="to"
+									value="#{beanCalendario.myEvento.fecha_termino}"
+									showOn="button" timeZone="GMT+2" pattern="dd/MM/yyyy HH:mm" />
+								<b:selectOneMenu id="tipoEvento"
+									label="#{texto.calenTipoEvento}"
+									value="#{beanCalendario.myEvento.tempTipoEvento}">
+									<f:selectItems value="#{beanCalendario.listTiposEventos}"
+										var="te" itemValue="#{te.id_tipoevento}"
+										itemLabel="#{te.descripcion}" />
+								</b:selectOneMenu>
+								<b:panelGrid id="botones" colSpans="6,6">
+									<p:commandButton type="elimina" value="#{texto.calenEliminar}"
+										update="@form" icon="fa fa-remove"
+										styleClass="btn-md btn-danger">
+										<p:confirm header="#{texto.calenConfirmacion}"
+											message="#{texto.calenConfirm}" icon="ui-icon-alert" />
+									</p:commandButton>
+									<p:commandButton id="addButton" value="#{texto.calenGuardar}"
+										actionListener="#{beanCalendario.guardaEvento()}"
+										icon="fa fa-save" styleClass="btn-md btn-dark"
+										oncomplete="PF('myschedule').update();PF('eventDialog').hide();" />
+									<p:confirmDialog global="true" showEffect="fade"
+										hideEffect="fade">
+										<p:commandButton value="#{texto.calenSi}"
+											actionListener="#{beanCalendario.eliminaEvento}"
+											styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+										<p:commandButton value="No" type="button"
+											styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+									</p:confirmDialog>
+								</b:panelGrid>
+							</b:panelGrid>
+						</b:well>
+					</p:dialog>
+				</h:form>
+			</div>
+			<script type="text/javascript">
+         PrimeFaces.locales['es'] = {
+    		closeText: 'Cerrar',
+   		    prevText: 'Anterior',
+   		    nextText: 'Siguiente',
+   		    monthNames: ['Enero','Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+   		    monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun','Jul','Ago','Sep','Oct','Nov','Dic'],
+   		    dayNames: ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'],
+   		    dayNamesShort: ['Dom','Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
+   		    dayNamesMin: ['Do','Lu','Ma','Mi','Ju','Vi','Sa'],
+   		    weekHeader: 'Semana',
+   		    firstDay: 1,
+   		    isRTL: false,
+   		    showMonthAfterYear: false,
+   		    yearSuffix: '',
+   		    timeOnlyTitle: 'Sólo hora',
+   		    timeText: 'Tiempo',
+   		    hourText: 'Hora',
+   		    minuteText: 'Minuto',
+   		    secondText: 'Segundo',
+   		    currentText: 'Fecha actual',
+   		    ampm: false,
+   		    month: 'Mes',
+   		    week: 'Semana',
+   		    day: 'Día',
+   		    allDayText : 'Todo el día'
+        };
+</script>
+			<style type="text/css">
+.emp1 {
+	background: #ecf46f;
+	border-color: #214bbb;
+}
+
+.eventRed {
+	background: #ADD557;
+}
+
+.eventBlack {
+	background: black;
+}
+
+.eventGrey {
+	background: grey;
+}
+
+.fc-today {
+	background: #ACCEEF !important;
+}
+</style>
+		</section>
+	</ui:define>
+</ui:composition>
